@@ -92,6 +92,11 @@ def analyze_photo(image_source, is_url=True):
     return json.loads(raw)
 
 
+@app.route('/')
+def health():
+    return jsonify({"status": "ok"})
+
+
 @app.route('/gpt', methods=['POST'])
 def gpt():
     data = request.get_json(force=True, silent=True)
@@ -180,4 +185,5 @@ def analyze_linkedin_photo():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=3000, debug=True)
+    port = int(os.environ.get("PORT", 3000))
+    app.run(host="0.0.0.0", port=port)
