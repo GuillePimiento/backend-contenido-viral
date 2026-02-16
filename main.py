@@ -3,12 +3,14 @@ import json
 import base64
 import requests
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from dotenv import load_dotenv
 from openai import OpenAI
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
@@ -178,4 +180,4 @@ def analyze_linkedin_photo():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=3000)
+    app.run(host="0.0.0.0", port=3000, debug=True)
