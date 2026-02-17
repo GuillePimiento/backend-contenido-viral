@@ -13,6 +13,7 @@ app = Flask(__name__)
 CORS(app)
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+API_SECRET_KEY = os.getenv("API_SECRET_KEY")
 
 
 def get_openai_client():
@@ -115,7 +116,26 @@ def gpt():
     return jsonify({"answer": f"Hola, recibí: '{mensaje}' en el tema '{tema}'."})
 
 
+def require_api_key(f):
+    """Decorator que verifica la API key en el header Authorization."""
+    from functools import wraps
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not API_SECRET_KEY:
+            return f(*args, **kwargs)
+        auth_header = request.headers.get("Authorization", "")
+        if auth_header.startswith("Bearer "):
+            token = auth_header[7:]
+        else:
+            token = auth_header
+        if token != API_SECRET_KEY:
+            return jsonify({"error": "API key invalida o faltante. Envia el header: Authorization: Bearer <tu-key>"}), 401
+        return f(*args, **kwargs)
+    return decorated
+
+
 @app.route('/analyze-linkedin-photo', methods=['POST'])
+@require_api_key
 def analyze_linkedin_photo():
     """
     Analiza una foto de perfil de LinkedIn.
