@@ -1,0 +1,499 @@
+<div id="linkedin-analyzer">
+  <style>
+    #linkedin-analyzer {
+      max-width: 600px;
+      margin: 40px auto;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #1a1a1a;
+    }
+    #linkedin-analyzer * { box-sizing: border-box; }
+    .la-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #0a66c2;
+    }
+    .la-subtitle {
+      text-align: center;
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+    .la-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      padding: 32px;
+    }
+    .la-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 24px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid #0a66c2;
+    }
+    .la-tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      background: #fff;
+      color: #0a66c2;
+      border: none;
+      transition: all 0.2s;
+    }
+    .la-tab.active {
+      background: #0a66c2;
+      color: #fff;
+    }
+    .la-upload-area {
+      border: 2px dashed #ccc;
+      border-radius: 12px;
+      padding: 40px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.3s, background 0.3s;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .la-upload-area:hover { border-color: #0a66c2; background: #f0f7ff; }
+    .la-upload-area.has-file { border-color: #0a66c2; background: #f0f7ff; }
+    .la-upload-icon { font-size: 48px; margin-bottom: 8px; }
+    .la-upload-text { font-size: 15px; color: #666; }
+    .la-upload-text strong { color: #0a66c2; }
+    .la-file-input { display: none; }
+    .la-preview-img {
+      max-width: 150px;
+      max-height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #0a66c2;
+    }
+    .la-url-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+      margin-bottom: 20px;
+      transition: border-color 0.3s;
+      outline: none;
+    }
+    .la-url-input:focus { border-color: #0a66c2; }
+    .la-btn {
+      width: 100%;
+      padding: 16px;
+      background: #0a66c2;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.1s;
+    }
+    .la-btn:hover { background: #004182; }
+    .la-btn:active { transform: scale(0.98); }
+    .la-btn:disabled { background: #a0c4e8; cursor: not-allowed; }
+    .la-spinner {
+      display: inline-block;
+      width: 20px; height: 20px;
+      border: 3px solid #fff;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: la-spin 0.8s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes la-spin { to { transform: rotate(360deg); } }
+
+    /* Resultados */
+    .la-results { display: none; margin-top: 30px; }
+    .la-results.visible { display: block; }
+    .la-score-total {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .la-score-circle {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .la-score-circle span { position: relative; z-index: 1; }
+    .la-score-label {
+      font-size: 14px;
+      color: #666;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .la-metric {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .la-metric-icon { font-size: 28px; flex-shrink: 0; }
+    .la-metric-info { flex: 1; }
+    .la-metric-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .la-metric-name { font-weight: 700; font-size: 15px; }
+    .la-metric-score {
+      font-weight: 800;
+      font-size: 18px;
+      color: #0a66c2;
+    }
+    .la-metric-bar {
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .la-metric-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 1s ease;
+      width: 0%;
+    }
+    .la-metric-text { font-size: 13px; color: #555; line-height: 1.4; }
+    .la-summary {
+      background: linear-gradient(135deg, #f0f7ff, #e8f0fe);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      border-left: 4px solid #0a66c2;
+    }
+    .la-summary-title { font-weight: 700; margin-bottom: 8px; color: #0a66c2; }
+    .la-summary-text { font-size: 14px; line-height: 1.6; color: #333; }
+    .la-error {
+      background: #fff0f0;
+      color: #c00;
+      padding: 14px;
+      border-radius: 10px;
+      text-align: center;
+      margin-top: 16px;
+      font-size: 14px;
+      display: none;
+    }
+    .la-error.visible { display: block; }
+    .la-retry {
+      display: block;
+      margin: 20px auto 0;
+      padding: 12px 32px;
+      background: transparent;
+      color: #0a66c2;
+      border: 2px solid #0a66c2;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .la-retry:hover { background: #f0f7ff; }
+    .la-hidden { display: none; }
+  </style>
+
+  <div class="la-title">Analiza tu Foto de LinkedIn</div>
+  <div class="la-subtitle">Descubre si tu foto transmite la imagen profesional que necesitas</div>
+
+  <div class="la-card">
+    <!-- Tabs -->
+    <div class="la-tabs">
+      <button class="la-tab active" onclick="laShowTab('upload')">Subir Foto</button>
+      <button class="la-tab" onclick="laShowTab('url')">Pegar URL</button>
+    </div>
+
+    <!-- Upload tab -->
+    <div id="la-tab-upload">
+      <div class="la-upload-area" id="la-drop-zone" onclick="document.getElementById('la-file-input').click()">
+        <div id="la-upload-placeholder">
+          <div class="la-upload-icon">📸</div>
+          <div class="la-upload-text">
+            <strong>Haz clic aqui</strong> o arrastra tu foto<br>
+            <small>JPG, PNG - Max 10MB</small>
+          </div>
+        </div>
+        <div id="la-upload-preview" class="la-hidden">
+          <img id="la-preview-image" class="la-preview-img" alt="Preview">
+          <div class="la-upload-text" style="margin-top:10px"><strong>Foto cargada</strong> - Clic para cambiar</div>
+        </div>
+        <input type="file" id="la-file-input" class="la-file-input" accept="image/*">
+      </div>
+    </div>
+
+    <!-- URL tab -->
+    <div id="la-tab-url" class="la-hidden">
+      <input type="text" id="la-url-input" class="la-url-input" placeholder="https://ejemplo.com/mi-foto-linkedin.jpg">
+    </div>
+
+    <button class="la-btn" id="la-analyze-btn" onclick="laAnalyze()">
+      Analizar Mi Foto
+    </button>
+
+    <div class="la-error" id="la-error"></div>
+  </div>
+
+  <!-- Resultados -->
+  <div class="la-results" id="la-results">
+    <div class="la-card">
+      <div class="la-score-total">
+        <div class="la-score-circle" id="la-total-circle">
+          <span id="la-total-score">0</span>
+        </div>
+        <div class="la-score-label">Puntaje Total / 10</div>
+      </div>
+
+      <div id="la-metric-amabilidad" class="la-metric">
+        <div class="la-metric-icon">😊</div>
+        <div class="la-metric-info">
+          <div class="la-metric-header">
+            <span class="la-metric-name">Amabilidad</span>
+            <span class="la-metric-score" id="la-score-amabilidad">0/10</span>
+          </div>
+          <div class="la-metric-bar"><div class="la-metric-fill" id="la-bar-amabilidad" style="background:#4CAF50"></div></div>
+          <div class="la-metric-text" id="la-text-amabilidad"></div>
+        </div>
+      </div>
+
+      <div id="la-metric-liderazgo" class="la-metric">
+        <div class="la-metric-icon">👔</div>
+        <div class="la-metric-info">
+          <div class="la-metric-header">
+            <span class="la-metric-name">Liderazgo</span>
+            <span class="la-metric-score" id="la-score-liderazgo">0/10</span>
+          </div>
+          <div class="la-metric-bar"><div class="la-metric-fill" id="la-bar-liderazgo" style="background:#2196F3"></div></div>
+          <div class="la-metric-text" id="la-text-liderazgo"></div>
+        </div>
+      </div>
+
+      <div id="la-metric-competencia" class="la-metric">
+        <div class="la-metric-icon">🏆</div>
+        <div class="la-metric-info">
+          <div class="la-metric-header">
+            <span class="la-metric-name">Competencia</span>
+            <span class="la-metric-score" id="la-score-competencia">0/10</span>
+          </div>
+          <div class="la-metric-bar"><div class="la-metric-fill" id="la-bar-competencia" style="background:#FF9800"></div></div>
+          <div class="la-metric-text" id="la-text-competencia"></div>
+        </div>
+      </div>
+
+      <div id="la-metric-asertividad" class="la-metric">
+        <div class="la-metric-icon">📱</div>
+        <div class="la-metric-info">
+          <div class="la-metric-header">
+            <span class="la-metric-name">Asertividad Digital</span>
+            <span class="la-metric-score" id="la-score-asertividad">0/10</span>
+          </div>
+          <div class="la-metric-bar"><div class="la-metric-fill" id="la-bar-asertividad" style="background:#9C27B0"></div></div>
+          <div class="la-metric-text" id="la-text-asertividad"></div>
+        </div>
+      </div>
+
+      <div class="la-summary" id="la-summary">
+        <div class="la-summary-title">Recomendaciones</div>
+        <div class="la-summary-text" id="la-summary-text"></div>
+      </div>
+
+      <button class="la-retry" onclick="laReset()">Analizar otra foto</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ============================================
+  // PEGA AQUI TU URL DE RAILWAY (ejemplo: https://tu-app.up.railway.app)
+  // ============================================
+  var API_URL = "https://PEGA-TU-URL-DE-RAILWAY-AQUI.up.railway.app/analyze-linkedin-photo";
+  // ============================================
+
+  var currentTab = "upload";
+  var selectedFile = null;
+
+  window.laShowTab = function(tab) {
+    currentTab = tab;
+    var tabs = document.querySelectorAll("#linkedin-analyzer .la-tab");
+    tabs[0].classList.toggle("active", tab === "upload");
+    tabs[1].classList.toggle("active", tab === "url");
+    document.getElementById("la-tab-upload").classList.toggle("la-hidden", tab !== "upload");
+    document.getElementById("la-tab-url").classList.toggle("la-hidden", tab !== "url");
+  };
+
+  // File input
+  document.getElementById("la-file-input").addEventListener("change", function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    selectedFile = file;
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      document.getElementById("la-preview-image").src = ev.target.result;
+      document.getElementById("la-upload-placeholder").classList.add("la-hidden");
+      document.getElementById("la-upload-preview").classList.remove("la-hidden");
+      document.getElementById("la-drop-zone").classList.add("has-file");
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Drag & drop
+  var dropZone = document.getElementById("la-drop-zone");
+  dropZone.addEventListener("dragover", function(e) { e.preventDefault(); dropZone.classList.add("has-file"); });
+  dropZone.addEventListener("dragleave", function() { if (!selectedFile) dropZone.classList.remove("has-file"); });
+  dropZone.addEventListener("drop", function(e) {
+    e.preventDefault();
+    var file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith("image/")) {
+      selectedFile = file;
+      var input = document.getElementById("la-file-input");
+      var dt = new DataTransfer();
+      dt.items.add(file);
+      input.files = dt.files;
+      input.dispatchEvent(new Event("change"));
+    }
+  });
+
+  function showError(msg) {
+    var el = document.getElementById("la-error");
+    el.textContent = msg;
+    el.classList.add("visible");
+  }
+
+  function hideError() {
+    document.getElementById("la-error").classList.remove("visible");
+  }
+
+  function getScoreColor(score) {
+    if (score >= 8) return "#4CAF50";
+    if (score >= 6) return "#FF9800";
+    if (score >= 4) return "#FF5722";
+    return "#F44336";
+  }
+
+  function animateScore(el, target) {
+    var current = 0;
+    var step = target / 30;
+    var interval = setInterval(function() {
+      current += step;
+      if (current >= target) { current = target; clearInterval(interval); }
+      el.textContent = current.toFixed(1);
+    }, 30);
+  }
+
+  function renderResults(data) {
+    var results = document.getElementById("la-results");
+    var total = data.calificacion_total;
+
+    // Total score
+    var circle = document.getElementById("la-total-circle");
+    circle.style.background = getScoreColor(total);
+    animateScore(document.getElementById("la-total-score"), total);
+
+    // Metrics
+    var metrics = [
+      { key: "amabilidad", id: "amabilidad" },
+      { key: "liderazgo", id: "liderazgo" },
+      { key: "competencia", id: "competencia" },
+      { key: "asertividad_digital", id: "asertividad" }
+    ];
+
+    metrics.forEach(function(m) {
+      var d = data.desglose[m.key];
+      document.getElementById("la-score-" + m.id).textContent = d.puntaje + "/10";
+      document.getElementById("la-text-" + m.id).textContent = d.justificacion;
+      setTimeout(function() {
+        document.getElementById("la-bar-" + m.id).style.width = (d.puntaje * 10) + "%";
+      }, 200);
+    });
+
+    // Summary
+    document.getElementById("la-summary-text").textContent = data.resumen;
+
+    results.classList.add("visible");
+    results.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  window.laAnalyze = function() {
+    hideError();
+    var btn = document.getElementById("la-analyze-btn");
+
+    if (currentTab === "upload") {
+      if (!selectedFile) { showError("Por favor selecciona una foto primero."); return; }
+      btn.disabled = true;
+      btn.innerHTML = '<span class="la-spinner"></span> Analizando...';
+      var formData = new FormData();
+      formData.append("image", selectedFile);
+      fetch(API_URL, { method: "POST", body: formData })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          btn.disabled = false;
+          btn.textContent = "Analizar Mi Foto";
+          if (data.error) { showError(data.error); return; }
+          renderResults(data);
+        })
+        .catch(function() {
+          btn.disabled = false;
+          btn.textContent = "Analizar Mi Foto";
+          showError("Error de conexion. Intenta de nuevo.");
+        });
+
+    } else {
+      var url = document.getElementById("la-url-input").value.trim();
+      if (!url) { showError("Por favor pega la URL de tu foto."); return; }
+      btn.disabled = true;
+      btn.innerHTML = '<span class="la-spinner"></span> Analizando...';
+      fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image_url: url })
+      })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          btn.disabled = false;
+          btn.textContent = "Analizar Mi Foto";
+          if (data.error) { showError(data.error); return; }
+          renderResults(data);
+        })
+        .catch(function() {
+          btn.disabled = false;
+          btn.textContent = "Analizar Mi Foto";
+          showError("Error de conexion. Intenta de nuevo.");
+        });
+    }
+  };
+
+  window.laReset = function() {
+    document.getElementById("la-results").classList.remove("visible");
+    document.getElementById("la-upload-placeholder").classList.remove("la-hidden");
+    document.getElementById("la-upload-preview").classList.add("la-hidden");
+    document.getElementById("la-drop-zone").classList.remove("has-file");
+    document.getElementById("la-url-input").value = "";
+    document.getElementById("la-file-input").value = "";
+    selectedFile = null;
+    hideError();
+    ["amabilidad","liderazgo","competencia","asertividad"].forEach(function(id) {
+      document.getElementById("la-bar-" + id).style.width = "0%";
+    });
+    document.querySelector("#linkedin-analyzer .la-card").scrollIntoView({ behavior: "smooth" });
+  };
+})();
+</script>
+</div>
