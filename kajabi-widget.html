@@ -4,117 +4,128 @@
 :root {
   --lpa-primary: #0A66C2;
   --lpa-primary-dark: #004182;
-  --lpa-accent: #F5A623;
+  --lpa-primary-light: #e8f1fb;
   --lpa-success: #057642;
   --lpa-bg: #f8fafc;
   --lpa-card: #ffffff;
-  --lpa-text: #1a1a2e;
-  --lpa-text-light: #64748b;
-  --lpa-border: #e2e8f0;
-  --lpa-gradient: linear-gradient(135deg, #0A66C2 0%, #004182 50%, #0A66C2 100%);
-  --lpa-gradient-gold: linear-gradient(135deg, #F5A623 0%, #F09819 100%);
+  --lpa-text: #1B1F23;
+  --lpa-text-secondary: #586069;
+  --lpa-text-muted: #8b949e;
+  --lpa-border: #e1e4e8;
+  --lpa-border-light: #f0f2f5;
+  --lpa-danger: #d1242f;
+  --lpa-danger-bg: #ffebe9;
+  --lpa-shadow-sm: 0 1px 2px rgba(27,31,35,0.04);
+  --lpa-shadow-md: 0 1px 3px rgba(27,31,35,0.04), 0 8px 24px rgba(27,31,35,0.06);
+  --lpa-shadow-lg: 0 4px 12px rgba(27,31,35,0.06), 0 12px 36px rgba(27,31,35,0.08);
+  --lpa-radius: 12px;
+  --lpa-radius-lg: 16px;
 }
 
 #lpa-container * {
-  margin: 0; padding: 0; box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 #lpa-container {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 0 20px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  max-width: 720px;
+  margin: 32px auto;
+  padding: 0 16px;
   color: var(--lpa-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Header */
+/* ── HEADER ── */
 .lpa-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 }
 
 .lpa-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(135deg, #0A66C2 0%, #004182 100%);
+  background: var(--lpa-primary);
   color: white;
-  padding: 6px 16px;
+  padding: 5px 14px;
   border-radius: 50px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
   margin-bottom: 16px;
 }
 
 .lpa-badge svg {
-  width: 14px; height: 14px;
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
 }
 
 .lpa-title {
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 800;
   line-height: 1.2;
-  margin-bottom: 12px;
-  background: linear-gradient(135deg, #0A66C2, #004182);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  margin-bottom: 10px;
+  color: var(--lpa-text);
 }
 
 .lpa-subtitle {
-  font-size: 17px;
-  color: var(--lpa-text-light);
+  font-size: 16px;
+  color: var(--lpa-text-secondary);
   line-height: 1.6;
-  max-width: 560px;
+  max-width: 520px;
   margin: 0 auto;
 }
 
-/* Upload Card */
+/* ── UPLOAD CARD ── */
 .lpa-upload-card {
   background: var(--lpa-card);
-  border-radius: 20px;
-  padding: 48px 40px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 30px rgba(0,0,0,0.06);
+  border-radius: var(--lpa-radius-lg);
+  padding: 40px 32px;
+  box-shadow: var(--lpa-shadow-md);
   border: 1px solid var(--lpa-border);
-  transition: all 0.3s ease;
 }
 
 .lpa-dropzone {
-  border: 2px dashed #cbd5e1;
-  border-radius: 16px;
-  padding: 48px 24px;
+  border: 2px dashed #c9d1d9;
+  border-radius: var(--lpa-radius);
+  padding: 44px 24px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  background: #f8fafc;
+  transition: all 0.2s ease;
+  background: var(--lpa-bg);
   position: relative;
 }
 
 .lpa-dropzone:hover,
 .lpa-dropzone.lpa-drag-over {
   border-color: var(--lpa-primary);
-  background: #f0f7ff;
-  transform: scale(1.01);
+  background: var(--lpa-primary-light);
 }
 
 .lpa-dropzone-icon {
-  width: 64px; height: 64px;
-  margin: 0 auto 16px;
-  background: linear-gradient(135deg, #e0ecff, #c7d9f7);
-  border-radius: 16px;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 14px;
+  background: var(--lpa-primary-light);
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .lpa-dropzone-icon svg {
-  width: 28px; height: 28px; color: var(--lpa-primary);
+  width: 24px;
+  height: 24px;
+  color: var(--lpa-primary);
 }
 
 .lpa-dropzone-text {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--lpa-text);
   margin-bottom: 4px;
@@ -122,7 +133,7 @@
 
 .lpa-dropzone-hint {
   font-size: 13px;
-  color: var(--lpa-text-light);
+  color: var(--lpa-text-muted);
 }
 
 .lpa-dropzone input[type="file"] {
@@ -132,128 +143,146 @@
   cursor: pointer;
 }
 
-/* Preview */
+/* ── PREVIEW ── */
 .lpa-preview {
   display: none;
   align-items: center;
-  gap: 20px;
-  padding: 20px;
-  background: #f8fafc;
-  border-radius: 16px;
-  margin-top: 20px;
+  gap: 16px;
+  padding: 16px;
+  background: var(--lpa-bg);
+  border-radius: var(--lpa-radius);
+  margin-top: 16px;
+  border: 1px solid var(--lpa-border-light);
 }
 
-.lpa-preview.lpa-show { display: flex; }
+.lpa-preview.lpa-show {
+  display: flex;
+}
 
 .lpa-preview-img {
-  width: 80px; height: 80px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--lpa-primary);
-  box-shadow: 0 4px 12px rgba(10,102,194,0.2);
+  border: 2px solid var(--lpa-primary);
+  flex-shrink: 0;
 }
 
 .lpa-preview-info {
   flex: 1;
+  min-width: 0;
 }
 
 .lpa-preview-name {
   font-weight: 600;
   font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin-bottom: 2px;
 }
 
 .lpa-preview-size {
   font-size: 12px;
-  color: var(--lpa-text-light);
+  color: var(--lpa-text-muted);
 }
 
 .lpa-preview-remove {
   background: none;
   border: none;
-  color: #ef4444;
+  color: var(--lpa-text-muted);
   cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  transition: background 0.2s;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.lpa-preview-remove:hover { background: #fef2f2; }
+.lpa-preview-remove:hover {
+  background: var(--lpa-danger-bg);
+  color: var(--lpa-danger);
+}
 
-/* Button */
+/* ── BUTTON ── */
 .lpa-btn {
   width: 100%;
-  padding: 16px 32px;
-  margin-top: 24px;
+  padding: 14px 24px;
+  margin-top: 20px;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 700;
+  border-radius: var(--lpa-radius);
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   color: white;
-  background: var(--lpa-gradient);
-  background-size: 200% 200%;
-  animation: lpa-gradient-shift 3s ease infinite;
-  box-shadow: 0 4px 15px rgba(10,102,194,0.3);
+  background: var(--lpa-primary);
+  font-family: inherit;
 }
 
 .lpa-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(10,102,194,0.4);
+  background: var(--lpa-primary-dark);
+}
+
+.lpa-btn:active:not(:disabled) {
+  transform: scale(0.99);
 }
 
 .lpa-btn:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
-  transform: none;
 }
 
-@keyframes lpa-gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-/* Loading */
+/* ── LOADING ── */
 .lpa-loading {
   display: none;
   text-align: center;
-  padding: 60px 20px;
+  padding: 56px 20px;
+  background: var(--lpa-card);
+  border-radius: var(--lpa-radius-lg);
+  box-shadow: var(--lpa-shadow-md);
+  border: 1px solid var(--lpa-border);
 }
 
-.lpa-loading.lpa-show { display: block; }
+.lpa-loading.lpa-show {
+  display: block;
+}
 
 .lpa-spinner {
-  width: 56px; height: 56px;
-  margin: 0 auto 24px;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 20px;
   border-radius: 50%;
-  border: 3px solid #e2e8f0;
+  border: 3px solid var(--lpa-border);
   border-top-color: var(--lpa-primary);
-  animation: lpa-spin 0.8s linear infinite;
+  animation: lpa-spin 0.7s linear infinite;
 }
 
-@keyframes lpa-spin { to { transform: rotate(360deg); } }
+@keyframes lpa-spin {
+  to { transform: rotate(360deg); }
+}
 
 .lpa-loading-text {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   color: var(--lpa-text);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .lpa-loading-sub {
   font-size: 14px;
-  color: var(--lpa-text-light);
+  color: var(--lpa-text-muted);
+  margin-bottom: 28px;
 }
 
 .lpa-loading-steps {
-  margin-top: 24px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  max-width: 280px;
-  margin-left: auto;
-  margin-right: auto;
+  gap: 10px;
+  max-width: 260px;
+  margin: 0 auto;
 }
 
 .lpa-step {
@@ -261,7 +290,7 @@
   align-items: center;
   gap: 10px;
   font-size: 13px;
-  color: var(--lpa-text-light);
+  color: var(--lpa-text-muted);
   transition: all 0.3s;
 }
 
@@ -270,44 +299,70 @@
   font-weight: 600;
 }
 
-.lpa-step.lpa-done { color: var(--lpa-success); }
+.lpa-step.lpa-done {
+  color: var(--lpa-success);
+}
 
-.lpa-step-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: #cbd5e1;
+.lpa-step-icon {
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lpa-step-icon .lpa-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c9d1d9;
   transition: all 0.3s;
 }
 
-.lpa-step.lpa-active .lpa-step-dot {
+.lpa-step.lpa-active .lpa-dot {
   background: var(--lpa-primary);
-  box-shadow: 0 0 0 3px rgba(10,102,194,0.2);
+  box-shadow: 0 0 0 3px rgba(10,102,194,0.15);
 }
 
-.lpa-step.lpa-done .lpa-step-dot { background: var(--lpa-success); }
+.lpa-step.lpa-done .lpa-dot {
+  display: none;
+}
 
-/* Results */
+.lpa-step.lpa-done .lpa-check-icon {
+  display: block;
+}
+
+.lpa-check-icon {
+  display: none;
+  width: 16px;
+  height: 16px;
+  color: var(--lpa-success);
+}
+
+/* ── RESULTS ── */
 .lpa-results {
   display: none;
-  animation: lpa-fade-in 0.6s ease;
+  animation: lpa-fade-up 0.5s ease;
 }
 
-.lpa-results.lpa-show { display: block; }
+.lpa-results.lpa-show {
+  display: block;
+}
 
-@keyframes lpa-fade-in {
-  from { opacity: 0; transform: translateY(20px); }
+@keyframes lpa-fade-up {
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Score Hero */
+/* ── SCORE HERO ── */
 .lpa-score-hero {
-  background: var(--lpa-gradient);
-  border-radius: 20px;
-  padding: 48px 40px;
+  background: var(--lpa-primary);
+  border-radius: var(--lpa-radius-lg);
+  padding: 40px 32px;
   text-align: center;
   color: white;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   position: relative;
   overflow: hidden;
 }
@@ -315,149 +370,139 @@
 .lpa-score-hero::before {
   content: '';
   position: absolute;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-  animation: lpa-pulse-bg 4s ease-in-out infinite;
-}
-
-@keyframes lpa-pulse-bg {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.1); opacity: 1; }
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .lpa-score-label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  opacity: 0.8;
-  margin-bottom: 12px;
+  opacity: 0.75;
+  margin-bottom: 16px;
   position: relative;
 }
 
 .lpa-score-ring {
   position: relative;
-  width: 160px; height: 160px;
-  margin: 0 auto 20px;
+  width: 144px;
+  height: 144px;
+  margin: 0 auto 16px;
 }
 
 .lpa-score-ring svg {
-  width: 160px; height: 160px;
+  width: 144px;
+  height: 144px;
   transform: rotate(-90deg);
 }
 
 .lpa-score-ring-bg {
   fill: none;
   stroke: rgba(255,255,255,0.15);
-  stroke-width: 8;
+  stroke-width: 7;
 }
 
 .lpa-score-ring-fill {
   fill: none;
   stroke: white;
-  stroke-width: 8;
+  stroke-width: 7;
   stroke-linecap: round;
-  stroke-dasharray: 408;
-  stroke-dashoffset: 408;
-  transition: stroke-dashoffset 1.5s ease-out;
+  stroke-dasharray: 377;
+  stroke-dashoffset: 377;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .lpa-score-number {
   position: absolute;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 48px;
+  font-size: 42px;
   font-weight: 800;
   line-height: 1;
 }
 
 .lpa-score-number span {
-  font-size: 22px;
-  opacity: 0.7;
+  font-size: 18px;
+  font-weight: 500;
+  opacity: 0.6;
 }
 
 .lpa-score-verdict {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
   position: relative;
+  opacity: 0.9;
 }
 
-/* Metric Cards */
+/* ── METRIC CARDS ── */
 .lpa-metrics {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-@media (max-width: 600px) {
-  .lpa-metrics { grid-template-columns: 1fr; }
-  .lpa-title { font-size: 28px; }
-  .lpa-upload-card { padding: 32px 20px; }
-  .lpa-score-hero { padding: 36px 20px; }
+  gap: 14px;
+  margin-bottom: 20px;
 }
 
 .lpa-metric-card {
   background: var(--lpa-card);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+  border-radius: var(--lpa-radius);
+  padding: 20px;
+  box-shadow: var(--lpa-shadow-sm);
   border: 1px solid var(--lpa-border);
-  transition: all 0.3s ease;
-  animation: lpa-fade-in 0.6s ease backwards;
+  animation: lpa-fade-up 0.5s ease backwards;
 }
 
 .lpa-metric-card:nth-child(1) { animation-delay: 0.1s; }
-.lpa-metric-card:nth-child(2) { animation-delay: 0.2s; }
-.lpa-metric-card:nth-child(3) { animation-delay: 0.3s; }
-.lpa-metric-card:nth-child(4) { animation-delay: 0.4s; }
-
-.lpa-metric-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-}
+.lpa-metric-card:nth-child(2) { animation-delay: 0.15s; }
+.lpa-metric-card:nth-child(3) { animation-delay: 0.2s; }
+.lpa-metric-card:nth-child(4) { animation-delay: 0.25s; }
 
 .lpa-metric-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .lpa-metric-icon {
-  width: 40px; height: 40px;
-  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+}
+
+.lpa-metric-icon svg {
+  width: 18px;
+  height: 18px;
 }
 
 .lpa-metric-score {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 800;
-  color: var(--lpa-primary);
 }
 
 .lpa-metric-score span {
-  font-size: 14px;
-  color: var(--lpa-text-light);
+  font-size: 13px;
+  color: var(--lpa-text-muted);
   font-weight: 500;
 }
 
 .lpa-metric-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   margin-bottom: 8px;
   color: var(--lpa-text);
 }
 
 .lpa-metric-bar-bg {
-  height: 6px;
-  background: #e2e8f0;
+  height: 5px;
+  background: var(--lpa-border-light);
   border-radius: 3px;
   overflow: hidden;
   margin-bottom: 10px;
@@ -467,93 +512,231 @@
   height: 100%;
   border-radius: 3px;
   width: 0%;
-  transition: width 1.2s ease-out;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .lpa-metric-text {
   font-size: 13px;
-  color: var(--lpa-text-light);
-  line-height: 1.5;
+  color: var(--lpa-text-secondary);
+  line-height: 1.55;
 }
 
-/* Colors per metric */
-.lpa-m-amabilidad .lpa-metric-icon { background: #fef3c7; }
-.lpa-m-amabilidad .lpa-metric-bar-fill { background: linear-gradient(90deg, #f59e0b, #f97316); }
+/* Metric color themes */
+.lpa-m-amabilidad .lpa-metric-icon { background: #FFF3E0; color: #E65100; }
+.lpa-m-amabilidad .lpa-metric-score { color: #E65100; }
+.lpa-m-amabilidad .lpa-metric-bar-fill { background: #FB8C00; }
 
-.lpa-m-liderazgo .lpa-metric-icon { background: #dbeafe; }
-.lpa-m-liderazgo .lpa-metric-bar-fill { background: linear-gradient(90deg, #3b82f6, #1d4ed8); }
+.lpa-m-liderazgo .lpa-metric-icon { background: #E3F2FD; color: #1565C0; }
+.lpa-m-liderazgo .lpa-metric-score { color: #1565C0; }
+.lpa-m-liderazgo .lpa-metric-bar-fill { background: #1E88E5; }
 
-.lpa-m-competencia .lpa-metric-icon { background: #d1fae5; }
-.lpa-m-competencia .lpa-metric-bar-fill { background: linear-gradient(90deg, #10b981, #059669); }
+.lpa-m-competencia .lpa-metric-icon { background: #E8F5E9; color: #2E7D32; }
+.lpa-m-competencia .lpa-metric-score { color: #2E7D32; }
+.lpa-m-competencia .lpa-metric-bar-fill { background: #43A047; }
 
-.lpa-m-asertividad .lpa-metric-icon { background: #ede9fe; }
-.lpa-m-asertividad .lpa-metric-bar-fill { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+.lpa-m-asertividad .lpa-metric-icon { background: #EDE7F6; color: #5E35B1; }
+.lpa-m-asertividad .lpa-metric-score { color: #5E35B1; }
+.lpa-m-asertividad .lpa-metric-bar-fill { background: #7E57C2; }
 
-/* Summary */
+/* ── SUMMARY ── */
 .lpa-summary {
   background: var(--lpa-card);
-  border-radius: 16px;
-  padding: 28px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+  border-radius: var(--lpa-radius);
+  padding: 24px;
+  box-shadow: var(--lpa-shadow-sm);
   border: 1px solid var(--lpa-border);
-  margin-bottom: 24px;
-  animation: lpa-fade-in 0.6s ease 0.5s backwards;
+  margin-bottom: 20px;
+  animation: lpa-fade-up 0.5s ease 0.35s backwards;
+}
+
+.lpa-summary-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.lpa-summary-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--lpa-primary-light);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.lpa-summary-icon svg {
+  width: 16px;
+  height: 16px;
+  color: var(--lpa-primary);
 }
 
 .lpa-summary-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  color: var(--lpa-text);
 }
 
 .lpa-summary-text {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.7;
-  color: var(--lpa-text-light);
+  color: var(--lpa-text-secondary);
 }
 
-/* Retry */
+/* ── RETRY / ERROR ── */
 .lpa-retry-btn {
   width: 100%;
-  padding: 14px;
-  border: 2px solid var(--lpa-border);
-  border-radius: 12px;
-  background: white;
-  font-size: 15px;
+  padding: 13px;
+  border: 1px solid var(--lpa-border);
+  border-radius: var(--lpa-radius);
+  background: var(--lpa-card);
+  font-size: 14px;
   font-weight: 600;
-  color: var(--lpa-text);
+  color: var(--lpa-text-secondary);
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.2s;
+  font-family: inherit;
 }
 
 .lpa-retry-btn:hover {
   border-color: var(--lpa-primary);
   color: var(--lpa-primary);
-  background: #f0f7ff;
+  background: var(--lpa-primary-light);
 }
 
-/* Error */
 .lpa-error {
   display: none;
   text-align: center;
-  padding: 40px;
-  background: #fef2f2;
-  border-radius: 16px;
-  border: 1px solid #fecaca;
+  padding: 40px 24px;
+  background: var(--lpa-card);
+  border-radius: var(--lpa-radius-lg);
+  box-shadow: var(--lpa-shadow-md);
+  border: 1px solid var(--lpa-border);
 }
 
-.lpa-error.lpa-show { display: block; }
+.lpa-error.lpa-show {
+  display: block;
+}
 
-.lpa-error-icon { font-size: 40px; margin-bottom: 12px; }
+.lpa-error-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  background: var(--lpa-danger-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lpa-error-icon svg {
+  width: 22px;
+  height: 22px;
+  color: var(--lpa-danger);
+}
 
 .lpa-error-text {
   font-size: 15px;
-  color: #dc2626;
+  color: var(--lpa-danger);
   font-weight: 500;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  #lpa-container {
+    margin: 20px auto;
+    padding: 0 12px;
+  }
+
+  .lpa-title {
+    font-size: 24px;
+  }
+
+  .lpa-subtitle {
+    font-size: 14px;
+  }
+
+  .lpa-upload-card {
+    padding: 24px 16px;
+  }
+
+  .lpa-dropzone {
+    padding: 32px 16px;
+  }
+
+  .lpa-dropzone-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+
+  .lpa-dropzone-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .lpa-dropzone-text {
+    font-size: 14px;
+  }
+
+  .lpa-preview {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .lpa-preview-img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .lpa-metrics {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .lpa-score-hero {
+    padding: 32px 20px;
+  }
+
+  .lpa-score-ring {
+    width: 120px;
+    height: 120px;
+  }
+
+  .lpa-score-ring svg {
+    width: 120px;
+    height: 120px;
+  }
+
+  .lpa-score-number {
+    font-size: 36px;
+  }
+
+  .lpa-score-number span {
+    font-size: 16px;
+  }
+
+  .lpa-metric-card {
+    padding: 16px;
+  }
+
+  .lpa-summary {
+    padding: 20px 16px;
+  }
+
+  .lpa-loading {
+    padding: 40px 16px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 768px) {
+  .lpa-title {
+    font-size: 28px;
+  }
 }
 </style>
 
@@ -562,77 +745,94 @@
   <div class="lpa-header">
     <div class="lpa-badge">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
-      Analizador con IA
+      Analisis con IA
     </div>
-    <h1 class="lpa-title">Analiza tu Foto de Perfil de LinkedIn</h1>
-    <p class="lpa-subtitle">Descubre cómo te perciben profesionalmente. Nuestra IA evalúa 4 dimensiones clave de tu imagen.</p>
+    <h1 class="lpa-title">Analiza tu Foto de Perfil</h1>
+    <p class="lpa-subtitle">Descubre como te perciben profesionalmente. Nuestra IA evalua 4 dimensiones clave de tu imagen de LinkedIn.</p>
   </div>
 
-  <!-- Upload -->
+  <!-- Upload Section -->
   <div class="lpa-upload-card" id="lpa-upload-section">
     <div class="lpa-dropzone" id="lpa-dropzone">
       <div class="lpa-dropzone-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       </div>
-      <p class="lpa-dropzone-text">Arrastra tu foto aquí o haz clic para seleccionar</p>
-      <p class="lpa-dropzone-hint">JPG, PNG o WEBP — Máximo 10 MB</p>
+      <p class="lpa-dropzone-text">Arrastra tu foto aqui o haz clic para seleccionar</p>
+      <p class="lpa-dropzone-hint">JPG, PNG o WEBP — Maximo 10 MB</p>
       <input type="file" id="lpa-file-input" accept="image/jpeg,image/png,image/webp">
     </div>
 
     <div class="lpa-preview" id="lpa-preview">
-      <img class="lpa-preview-img" id="lpa-preview-img" src="" alt="Preview">
+      <img class="lpa-preview-img" id="lpa-preview-img" src="" alt="Vista previa">
       <div class="lpa-preview-info">
         <p class="lpa-preview-name" id="lpa-preview-name"></p>
         <p class="lpa-preview-size" id="lpa-preview-size"></p>
       </div>
       <button class="lpa-preview-remove" id="lpa-remove-btn" title="Quitar foto">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
 
-    <button class="lpa-btn" id="lpa-analyze-btn" disabled>
-      Analizar mi foto con IA
-    </button>
+    <button class="lpa-btn" id="lpa-analyze-btn" disabled>Analizar mi foto</button>
   </div>
 
   <!-- Loading -->
   <div class="lpa-loading" id="lpa-loading">
     <div class="lpa-spinner"></div>
     <p class="lpa-loading-text">Analizando tu foto...</p>
-    <p class="lpa-loading-sub">Nuestra IA está evaluando tu imagen profesional</p>
+    <p class="lpa-loading-sub">Nuestra IA esta evaluando tu imagen profesional</p>
     <div class="lpa-loading-steps">
-      <div class="lpa-step lpa-active" id="lpa-step-1"><div class="lpa-step-dot"></div>Procesando imagen...</div>
-      <div class="lpa-step" id="lpa-step-2"><div class="lpa-step-dot"></div>Evaluando expresión facial...</div>
-      <div class="lpa-step" id="lpa-step-3"><div class="lpa-step-dot"></div>Analizando imagen profesional...</div>
-      <div class="lpa-step" id="lpa-step-4"><div class="lpa-step-dot"></div>Generando recomendaciones...</div>
+      <div class="lpa-step lpa-active" id="lpa-step-1">
+        <div class="lpa-step-icon"><div class="lpa-dot"></div><svg class="lpa-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        Procesando imagen
+      </div>
+      <div class="lpa-step" id="lpa-step-2">
+        <div class="lpa-step-icon"><div class="lpa-dot"></div><svg class="lpa-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        Evaluando expresion facial
+      </div>
+      <div class="lpa-step" id="lpa-step-3">
+        <div class="lpa-step-icon"><div class="lpa-dot"></div><svg class="lpa-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        Analizando imagen profesional
+      </div>
+      <div class="lpa-step" id="lpa-step-4">
+        <div class="lpa-step-icon"><div class="lpa-dot"></div><svg class="lpa-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        Generando recomendaciones
+      </div>
     </div>
   </div>
 
   <!-- Error -->
   <div class="lpa-error" id="lpa-error">
-    <div class="lpa-error-icon">😕</div>
-    <p class="lpa-error-text" id="lpa-error-text">Ocurrió un error</p>
+    <div class="lpa-error-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <p class="lpa-error-text" id="lpa-error-text">Ocurrio un error al analizar la foto.</p>
     <button class="lpa-retry-btn" id="lpa-error-retry">Intentar de nuevo</button>
   </div>
 
   <!-- Results -->
   <div class="lpa-results" id="lpa-results">
+    <!-- Score Hero -->
     <div class="lpa-score-hero">
-      <p class="lpa-score-label">Tu Puntaje General</p>
+      <p class="lpa-score-label">Puntaje General</p>
       <div class="lpa-score-ring">
-        <svg viewBox="0 0 140 140">
-          <circle class="lpa-score-ring-bg" cx="70" cy="70" r="65"/>
-          <circle class="lpa-score-ring-fill" id="lpa-ring-fill" cx="70" cy="70" r="65"/>
+        <svg viewBox="0 0 130 130">
+          <circle class="lpa-score-ring-bg" cx="65" cy="65" r="60"/>
+          <circle class="lpa-score-ring-fill" id="lpa-ring-fill" cx="65" cy="65" r="60"/>
         </svg>
         <div class="lpa-score-number" id="lpa-total-score">0<span>/10</span></div>
       </div>
       <p class="lpa-score-verdict" id="lpa-verdict"></p>
     </div>
 
+    <!-- Metric Cards -->
     <div class="lpa-metrics">
+      <!-- Amabilidad -->
       <div class="lpa-metric-card lpa-m-amabilidad">
         <div class="lpa-metric-header">
-          <div class="lpa-metric-icon">😊</div>
+          <div class="lpa-metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          </div>
           <div class="lpa-metric-score" id="lpa-s-amabilidad">0<span>/10</span></div>
         </div>
         <p class="lpa-metric-name">Amabilidad</p>
@@ -640,9 +840,12 @@
         <p class="lpa-metric-text" id="lpa-j-amabilidad"></p>
       </div>
 
+      <!-- Liderazgo -->
       <div class="lpa-metric-card lpa-m-liderazgo">
         <div class="lpa-metric-header">
-          <div class="lpa-metric-icon">👔</div>
+          <div class="lpa-metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
           <div class="lpa-metric-score" id="lpa-s-liderazgo">0<span>/10</span></div>
         </div>
         <p class="lpa-metric-name">Liderazgo</p>
@@ -650,9 +853,12 @@
         <p class="lpa-metric-text" id="lpa-j-liderazgo"></p>
       </div>
 
+      <!-- Competencia -->
       <div class="lpa-metric-card lpa-m-competencia">
         <div class="lpa-metric-header">
-          <div class="lpa-metric-icon">🎯</div>
+          <div class="lpa-metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
           <div class="lpa-metric-score" id="lpa-s-competencia">0<span>/10</span></div>
         </div>
         <p class="lpa-metric-name">Competencia</p>
@@ -660,9 +866,12 @@
         <p class="lpa-metric-text" id="lpa-j-competencia"></p>
       </div>
 
+      <!-- Asertividad Digital -->
       <div class="lpa-metric-card lpa-m-asertividad">
         <div class="lpa-metric-header">
-          <div class="lpa-metric-icon">📱</div>
+          <div class="lpa-metric-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
           <div class="lpa-metric-score" id="lpa-s-asertividad">0<span>/10</span></div>
         </div>
         <p class="lpa-metric-name">Asertividad Digital</p>
@@ -671,8 +880,14 @@
       </div>
     </div>
 
+    <!-- Summary -->
     <div class="lpa-summary">
-      <p class="lpa-summary-title">💡 Recomendaciones Personalizadas</p>
+      <div class="lpa-summary-header">
+        <div class="lpa-summary-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </div>
+        <p class="lpa-summary-title">Recomendaciones Personalizadas</p>
+      </div>
       <p class="lpa-summary-text" id="lpa-summary-text"></p>
     </div>
 
@@ -682,55 +897,59 @@
 
 <script>
 (function() {
-  // ====== CONFIGURACIÓN ======
-  const API_URL = 'https://web-production-5615e.up.railway.app/analyze-linkedin-photo';
-  const API_KEY = 'TU_API_SECRET_KEY_AQUI';  // Reemplaza con tu API_SECRET_KEY de Railway
-  // ===========================
+  var API_URL = 'https://web-production-5615e.up.railway.app/analyze-linkedin-photo';
+  var API_KEY = 'cv-2026-GuiLLe-SecretKey-X7k9m';
 
-  let selectedFile = null;
+  var selectedFile = null;
 
-  const $ = id => document.getElementById(id);
+  function $(id) { return document.getElementById(id); }
 
-  const dropzone = $('lpa-dropzone');
-  const fileInput = $('lpa-file-input');
-  const preview = $('lpa-preview');
-  const previewImg = $('lpa-preview-img');
-  const previewName = $('lpa-preview-name');
-  const previewSize = $('lpa-preview-size');
-  const removeBtn = $('lpa-remove-btn');
-  const analyzeBtn = $('lpa-analyze-btn');
-  const uploadSection = $('lpa-upload-section');
-  const loading = $('lpa-loading');
-  const results = $('lpa-results');
-  const errorDiv = $('lpa-error');
+  var dropzone = $('lpa-dropzone');
+  var fileInput = $('lpa-file-input');
+  var preview = $('lpa-preview');
+  var previewImg = $('lpa-preview-img');
+  var previewName = $('lpa-preview-name');
+  var previewSize = $('lpa-preview-size');
+  var removeBtn = $('lpa-remove-btn');
+  var analyzeBtn = $('lpa-analyze-btn');
+  var uploadSection = $('lpa-upload-section');
+  var loading = $('lpa-loading');
+  var results = $('lpa-results');
+  var errorDiv = $('lpa-error');
 
   // Drag and drop
-  ['dragenter','dragover'].forEach(e => {
-    dropzone.addEventListener(e, ev => { ev.preventDefault(); dropzone.classList.add('lpa-drag-over'); });
+  ['dragenter','dragover'].forEach(function(e) {
+    dropzone.addEventListener(e, function(ev) {
+      ev.preventDefault();
+      dropzone.classList.add('lpa-drag-over');
+    });
   });
-  ['dragleave','drop'].forEach(e => {
-    dropzone.addEventListener(e, ev => { ev.preventDefault(); dropzone.classList.remove('lpa-drag-over'); });
+  ['dragleave','drop'].forEach(function(e) {
+    dropzone.addEventListener(e, function(ev) {
+      ev.preventDefault();
+      dropzone.classList.remove('lpa-drag-over');
+    });
   });
-  dropzone.addEventListener('drop', e => {
+  dropzone.addEventListener('drop', function(e) {
     if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
   });
 
-  fileInput.addEventListener('change', e => {
+  fileInput.addEventListener('change', function(e) {
     if (e.target.files.length) handleFile(e.target.files[0]);
   });
 
   function handleFile(file) {
     if (!file.type.match(/image\/(jpeg|png|webp)/)) {
-      alert('Por favor sube una imagen JPG, PNG o WEBP');
+      showInlineError('Formato no soportado. Usa JPG, PNG o WEBP.');
       return;
     }
     if (file.size > 10 * 1024 * 1024) {
-      alert('La imagen no puede pesar más de 10 MB');
+      showInlineError('La imagen supera el limite de 10 MB.');
       return;
     }
     selectedFile = file;
-    const reader = new FileReader();
-    reader.onload = e => { previewImg.src = e.target.result; };
+    var reader = new FileReader();
+    reader.onload = function(e) { previewImg.src = e.target.result; };
     reader.readAsDataURL(file);
     previewName.textContent = file.name;
     previewSize.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
@@ -738,7 +957,11 @@
     analyzeBtn.disabled = false;
   }
 
-  removeBtn.addEventListener('click', () => {
+  function showInlineError(msg) {
+    alert(msg);
+  }
+
+  removeBtn.addEventListener('click', function() {
     selectedFile = null;
     fileInput.value = '';
     preview.classList.remove('lpa-show');
@@ -748,9 +971,9 @@
 
   // Loading steps animation
   function animateSteps() {
-    const steps = ['lpa-step-1','lpa-step-2','lpa-step-3','lpa-step-4'];
-    let i = 0;
-    return setInterval(() => {
+    var steps = ['lpa-step-1','lpa-step-2','lpa-step-3','lpa-step-4'];
+    var i = 0;
+    return setInterval(function() {
       if (i > 0) {
         $(steps[i-1]).classList.remove('lpa-active');
         $(steps[i-1]).classList.add('lpa-done');
@@ -763,7 +986,7 @@
   }
 
   // Analyze
-  analyzeBtn.addEventListener('click', async () => {
+  analyzeBtn.addEventListener('click', function() {
     if (!selectedFile) return;
 
     uploadSection.style.display = 'none';
@@ -772,79 +995,78 @@
     loading.classList.add('lpa-show');
 
     // Reset steps
-    ['lpa-step-1','lpa-step-2','lpa-step-3','lpa-step-4'].forEach(id => {
+    ['lpa-step-1','lpa-step-2','lpa-step-3','lpa-step-4'].forEach(function(id) {
       $(id).classList.remove('lpa-active','lpa-done');
     });
-    const stepInterval = animateSteps();
+    var stepInterval = animateSteps();
 
-    try {
-      const formData = new FormData();
-      formData.append('image', selectedFile);
+    var formData = new FormData();
+    formData.append('image', selectedFile);
 
-      const headers = {};
-      if (API_KEY && API_KEY !== 'TU_API_SECRET_KEY_AQUI') {
-        headers['Authorization'] = 'Bearer ' + API_KEY;
-      }
-
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: headers,
-        body: formData
-      });
-
-      const data = await response.json();
-      clearInterval(stepInterval);
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Error del servidor');
-      }
-
-      loading.classList.remove('lpa-show');
-      showResults(data);
-
-    } catch (err) {
-      clearInterval(stepInterval);
-      loading.classList.remove('lpa-show');
-      $('lpa-error-text').textContent = err.message || 'Ocurrió un error al analizar la foto';
-      errorDiv.classList.add('lpa-show');
+    var headers = {};
+    if (API_KEY) {
+      headers['Authorization'] = 'Bearer ' + API_KEY;
     }
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: headers,
+      body: formData
+    })
+    .then(function(response) {
+      return response.json().then(function(data) {
+        clearInterval(stepInterval);
+        if (!response.ok) {
+          throw new Error(data.error || 'Error del servidor');
+        }
+        loading.classList.remove('lpa-show');
+        showResults(data);
+      });
+    })
+    .catch(function(err) {
+      clearInterval(stepInterval);
+      loading.classList.remove('lpa-show');
+      $('lpa-error-text').textContent = err.message || 'Ocurrio un error al analizar la foto.';
+      errorDiv.classList.add('lpa-show');
+    });
   });
 
   function showResults(data) {
-    const total = data.calificacion_total;
-    const d = data.desglose;
+    var total = data.calificacion_total;
+    var d = data.desglose;
 
     // Ring animation
-    const circumference = 2 * Math.PI * 65; // ~408
-    const offset = circumference - (total / 10) * circumference;
-    const ring = $('lpa-ring-fill');
+    var radius = 60;
+    var circumference = 2 * Math.PI * radius;
+    var offset = circumference - (total / 10) * circumference;
+    var ring = $('lpa-ring-fill');
     ring.style.strokeDasharray = circumference;
     ring.style.strokeDashoffset = circumference;
-    setTimeout(() => { ring.style.strokeDashoffset = offset; }, 100);
+    setTimeout(function() { ring.style.strokeDashoffset = offset; }, 100);
 
     // Animated counter
     animateCounter('lpa-total-score', total, '/10');
 
     // Verdict
-    let verdict = '';
-    if (total >= 9) verdict = '¡Excelente! Tu foto es de nivel premium';
-    else if (total >= 7.5) verdict = '¡Muy bien! Tu foto transmite profesionalismo';
-    else if (total >= 6) verdict = 'Buena base, pero hay espacio para mejorar';
-    else verdict = 'Tu foto necesita mejoras importantes';
+    var verdict = '';
+    if (total >= 9) verdict = 'Excelente. Tu foto es de nivel premium.';
+    else if (total >= 7.5) verdict = 'Muy bien. Tu foto transmite profesionalismo.';
+    else if (total >= 6) verdict = 'Buena base, con margen de mejora.';
+    else verdict = 'Tu foto necesita mejoras importantes.';
     $('lpa-verdict').textContent = verdict;
 
     // Metrics
-    const metrics = [
+    var metrics = [
       { key: 'amabilidad', id: 'amabilidad' },
       { key: 'liderazgo', id: 'liderazgo' },
       { key: 'competencia', id: 'competencia' },
       { key: 'asertividad_digital', id: 'asertividad' }
     ];
 
-    metrics.forEach(m => {
-      const score = d[m.key].puntaje;
+    metrics.forEach(function(m) {
+      var score = d[m.key].puntaje;
       animateCounter('lpa-s-' + m.id, score, '/10');
-      setTimeout(() => {
+      setTimeout(function() {
         $('lpa-bar-' + m.id).style.width = (score * 10) + '%';
       }, 200);
       $('lpa-j-' + m.id).textContent = d[m.key].justificacion;
@@ -852,23 +1074,26 @@
 
     $('lpa-summary-text').textContent = data.resumen;
     results.classList.add('lpa-show');
+
+    // Scroll to results
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function animateCounter(elId, target, suffix) {
-    const el = $(elId);
-    let current = 0;
-    const step = target / 30;
-    const interval = setInterval(() => {
+    var el = $(elId);
+    var current = 0;
+    var step = target / 25;
+    var interval = setInterval(function() {
       current += step;
       if (current >= target) {
         current = target;
         clearInterval(interval);
       }
       el.innerHTML = (Math.round(current * 10) / 10) + '<span>' + suffix + '</span>';
-    }, 40);
+    }, 45);
   }
 
-  // Retry buttons
+  // Retry
   $('lpa-retry-btn').addEventListener('click', resetAll);
   $('lpa-error-retry').addEventListener('click', resetAll);
 
@@ -882,6 +1107,7 @@
     errorDiv.classList.remove('lpa-show');
     loading.classList.remove('lpa-show');
     uploadSection.style.display = 'block';
+    uploadSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 })();
 </script>
