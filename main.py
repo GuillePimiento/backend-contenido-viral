@@ -83,11 +83,19 @@ def analyze_photo(image_source, is_url=True):
     raw = response.choices[0].message.content.strip()
 
     # Limpiar posible markdown ```json ... ```
-    if raw.startswith("```"):
-        raw = raw.split("\n", 1)[1]
-    if raw.endswith("```"):
-        raw = raw.rsplit("```", 1)[0]
+    if "```json" in raw:
+        raw = raw.split("```json", 1)[1]
+    elif "```" in raw:
+        raw = raw.split("```", 1)[1]
+    if "```" in raw:
+        raw = raw.split("```")[0]
     raw = raw.strip()
+
+    # Intentar extraer JSON si hay texto extra
+    import re
+    json_match = re.search(r'\{[\s\S]*\}', raw)
+    if json_match:
+        raw = json_match.group()
 
     return json.loads(raw)
 
@@ -128,10 +136,12 @@ def analyze_linkedin_photo():
         image_url = data["image_url"]
         try:
             result = analyze_photo(image_url, is_url=True)
-        except requests.exceptions.RequestException:
-            return jsonify({"error": "No se pudo descargar la imagen desde la URL proporcionada."}), 400
-        except json.JSONDecodeError:
-            return jsonify({"error": "Error al procesar la respuesta del análisis."}), 500
+        except requests.exceptions.RequestException as e:
+            return jsonify({"error": f"No se pudo descargar la imagen desde la URL proporcionada: {str(e)}"}), 400
+        except json.JSONDecodeError as e:
+            return jsonify({"error": f"Error al procesar la respuesta del análisis: {str(e)}"}), 500
+        except Exception as e:
+            return jsonify({"error": f"Error inesperado: {str(e)}"}), 500
 
     # Intentar obtener imagen desde form-data (archivo subido)
     elif 'image' in request.files:
@@ -140,8 +150,10 @@ def analyze_linkedin_photo():
         image_b64 = base64.b64encode(image_bytes).decode("utf-8")
         try:
             result = analyze_photo(image_b64, is_url=False)
-        except json.JSONDecodeError:
-            return jsonify({"error": "Error al procesar la respuesta del análisis."}), 500
+        except json.JSONDecodeError as e:
+            return jsonify({"error": f"Error al procesar la respuesta del análisis: {str(e)}"}), 500
+        except Exception as e:
+            return jsonify({"error": f"Error inesperado: {str(e)}"}), 500
     else:
         return jsonify({
             "error": "Debes enviar 'image_url' en JSON o subir un archivo 'image' en form-data."
