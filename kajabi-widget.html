@@ -1,0 +1,887 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --lpa-primary: #0A66C2;
+  --lpa-primary-dark: #004182;
+  --lpa-accent: #F5A623;
+  --lpa-success: #057642;
+  --lpa-bg: #f8fafc;
+  --lpa-card: #ffffff;
+  --lpa-text: #1a1a2e;
+  --lpa-text-light: #64748b;
+  --lpa-border: #e2e8f0;
+  --lpa-gradient: linear-gradient(135deg, #0A66C2 0%, #004182 50%, #0A66C2 100%);
+  --lpa-gradient-gold: linear-gradient(135deg, #F5A623 0%, #F09819 100%);
+}
+
+#lpa-container * {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+
+#lpa-container {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+  color: var(--lpa-text);
+}
+
+/* Header */
+.lpa-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.lpa-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #0A66C2 0%, #004182 100%);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.lpa-badge svg {
+  width: 14px; height: 14px;
+}
+
+.lpa-title {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #0A66C2, #004182);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lpa-subtitle {
+  font-size: 17px;
+  color: var(--lpa-text-light);
+  line-height: 1.6;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* Upload Card */
+.lpa-upload-card {
+  background: var(--lpa-card);
+  border-radius: 20px;
+  padding: 48px 40px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 30px rgba(0,0,0,0.06);
+  border: 1px solid var(--lpa-border);
+  transition: all 0.3s ease;
+}
+
+.lpa-dropzone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  padding: 48px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+  position: relative;
+}
+
+.lpa-dropzone:hover,
+.lpa-dropzone.lpa-drag-over {
+  border-color: var(--lpa-primary);
+  background: #f0f7ff;
+  transform: scale(1.01);
+}
+
+.lpa-dropzone-icon {
+  width: 64px; height: 64px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, #e0ecff, #c7d9f7);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lpa-dropzone-icon svg {
+  width: 28px; height: 28px; color: var(--lpa-primary);
+}
+
+.lpa-dropzone-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--lpa-text);
+  margin-bottom: 4px;
+}
+
+.lpa-dropzone-hint {
+  font-size: 13px;
+  color: var(--lpa-text-light);
+}
+
+.lpa-dropzone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Preview */
+.lpa-preview {
+  display: none;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 16px;
+  margin-top: 20px;
+}
+
+.lpa-preview.lpa-show { display: flex; }
+
+.lpa-preview-img {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--lpa-primary);
+  box-shadow: 0 4px 12px rgba(10,102,194,0.2);
+}
+
+.lpa-preview-info {
+  flex: 1;
+}
+
+.lpa-preview-name {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.lpa-preview-size {
+  font-size: 12px;
+  color: var(--lpa-text-light);
+}
+
+.lpa-preview-remove {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.lpa-preview-remove:hover { background: #fef2f2; }
+
+/* Button */
+.lpa-btn {
+  width: 100%;
+  padding: 16px 32px;
+  margin-top: 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  background: var(--lpa-gradient);
+  background-size: 200% 200%;
+  animation: lpa-gradient-shift 3s ease infinite;
+  box-shadow: 0 4px 15px rgba(10,102,194,0.3);
+}
+
+.lpa-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(10,102,194,0.4);
+}
+
+.lpa-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes lpa-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Loading */
+.lpa-loading {
+  display: none;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.lpa-loading.lpa-show { display: block; }
+
+.lpa-spinner {
+  width: 56px; height: 56px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  border: 3px solid #e2e8f0;
+  border-top-color: var(--lpa-primary);
+  animation: lpa-spin 0.8s linear infinite;
+}
+
+@keyframes lpa-spin { to { transform: rotate(360deg); } }
+
+.lpa-loading-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--lpa-text);
+  margin-bottom: 8px;
+}
+
+.lpa-loading-sub {
+  font-size: 14px;
+  color: var(--lpa-text-light);
+}
+
+.lpa-loading-steps {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lpa-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--lpa-text-light);
+  transition: all 0.3s;
+}
+
+.lpa-step.lpa-active {
+  color: var(--lpa-primary);
+  font-weight: 600;
+}
+
+.lpa-step.lpa-done { color: var(--lpa-success); }
+
+.lpa-step-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.lpa-step.lpa-active .lpa-step-dot {
+  background: var(--lpa-primary);
+  box-shadow: 0 0 0 3px rgba(10,102,194,0.2);
+}
+
+.lpa-step.lpa-done .lpa-step-dot { background: var(--lpa-success); }
+
+/* Results */
+.lpa-results {
+  display: none;
+  animation: lpa-fade-in 0.6s ease;
+}
+
+.lpa-results.lpa-show { display: block; }
+
+@keyframes lpa-fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Score Hero */
+.lpa-score-hero {
+  background: var(--lpa-gradient);
+  border-radius: 20px;
+  padding: 48px 40px;
+  text-align: center;
+  color: white;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.lpa-score-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+  animation: lpa-pulse-bg 4s ease-in-out infinite;
+}
+
+@keyframes lpa-pulse-bg {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+.lpa-score-label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.lpa-score-ring {
+  position: relative;
+  width: 160px; height: 160px;
+  margin: 0 auto 20px;
+}
+
+.lpa-score-ring svg {
+  width: 160px; height: 160px;
+  transform: rotate(-90deg);
+}
+
+.lpa-score-ring-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.15);
+  stroke-width: 8;
+}
+
+.lpa-score-ring-fill {
+  fill: none;
+  stroke: white;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 408;
+  stroke-dashoffset: 408;
+  transition: stroke-dashoffset 1.5s ease-out;
+}
+
+.lpa-score-number {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.lpa-score-number span {
+  font-size: 22px;
+  opacity: 0.7;
+}
+
+.lpa-score-verdict {
+  font-size: 18px;
+  font-weight: 600;
+  position: relative;
+}
+
+/* Metric Cards */
+.lpa-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+  .lpa-metrics { grid-template-columns: 1fr; }
+  .lpa-title { font-size: 28px; }
+  .lpa-upload-card { padding: 32px 20px; }
+  .lpa-score-hero { padding: 36px 20px; }
+}
+
+.lpa-metric-card {
+  background: var(--lpa-card);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+  border: 1px solid var(--lpa-border);
+  transition: all 0.3s ease;
+  animation: lpa-fade-in 0.6s ease backwards;
+}
+
+.lpa-metric-card:nth-child(1) { animation-delay: 0.1s; }
+.lpa-metric-card:nth-child(2) { animation-delay: 0.2s; }
+.lpa-metric-card:nth-child(3) { animation-delay: 0.3s; }
+.lpa-metric-card:nth-child(4) { animation-delay: 0.4s; }
+
+.lpa-metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.lpa-metric-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.lpa-metric-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.lpa-metric-score {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--lpa-primary);
+}
+
+.lpa-metric-score span {
+  font-size: 14px;
+  color: var(--lpa-text-light);
+  font-weight: 500;
+}
+
+.lpa-metric-name {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  color: var(--lpa-text);
+}
+
+.lpa-metric-bar-bg {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.lpa-metric-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  width: 0%;
+  transition: width 1.2s ease-out;
+}
+
+.lpa-metric-text {
+  font-size: 13px;
+  color: var(--lpa-text-light);
+  line-height: 1.5;
+}
+
+/* Colors per metric */
+.lpa-m-amabilidad .lpa-metric-icon { background: #fef3c7; }
+.lpa-m-amabilidad .lpa-metric-bar-fill { background: linear-gradient(90deg, #f59e0b, #f97316); }
+
+.lpa-m-liderazgo .lpa-metric-icon { background: #dbeafe; }
+.lpa-m-liderazgo .lpa-metric-bar-fill { background: linear-gradient(90deg, #3b82f6, #1d4ed8); }
+
+.lpa-m-competencia .lpa-metric-icon { background: #d1fae5; }
+.lpa-m-competencia .lpa-metric-bar-fill { background: linear-gradient(90deg, #10b981, #059669); }
+
+.lpa-m-asertividad .lpa-metric-icon { background: #ede9fe; }
+.lpa-m-asertividad .lpa-metric-bar-fill { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+
+/* Summary */
+.lpa-summary {
+  background: var(--lpa-card);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+  border: 1px solid var(--lpa-border);
+  margin-bottom: 24px;
+  animation: lpa-fade-in 0.6s ease 0.5s backwards;
+}
+
+.lpa-summary-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lpa-summary-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--lpa-text-light);
+}
+
+/* Retry */
+.lpa-retry-btn {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid var(--lpa-border);
+  border-radius: 12px;
+  background: white;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--lpa-text);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.lpa-retry-btn:hover {
+  border-color: var(--lpa-primary);
+  color: var(--lpa-primary);
+  background: #f0f7ff;
+}
+
+/* Error */
+.lpa-error {
+  display: none;
+  text-align: center;
+  padding: 40px;
+  background: #fef2f2;
+  border-radius: 16px;
+  border: 1px solid #fecaca;
+}
+
+.lpa-error.lpa-show { display: block; }
+
+.lpa-error-icon { font-size: 40px; margin-bottom: 12px; }
+
+.lpa-error-text {
+  font-size: 15px;
+  color: #dc2626;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+</style>
+
+<div id="lpa-container">
+  <!-- Header -->
+  <div class="lpa-header">
+    <div class="lpa-badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+      Analizador con IA
+    </div>
+    <h1 class="lpa-title">Analiza tu Foto de Perfil de LinkedIn</h1>
+    <p class="lpa-subtitle">Descubre cómo te perciben profesionalmente. Nuestra IA evalúa 4 dimensiones clave de tu imagen.</p>
+  </div>
+
+  <!-- Upload -->
+  <div class="lpa-upload-card" id="lpa-upload-section">
+    <div class="lpa-dropzone" id="lpa-dropzone">
+      <div class="lpa-dropzone-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </div>
+      <p class="lpa-dropzone-text">Arrastra tu foto aquí o haz clic para seleccionar</p>
+      <p class="lpa-dropzone-hint">JPG, PNG o WEBP — Máximo 10 MB</p>
+      <input type="file" id="lpa-file-input" accept="image/jpeg,image/png,image/webp">
+    </div>
+
+    <div class="lpa-preview" id="lpa-preview">
+      <img class="lpa-preview-img" id="lpa-preview-img" src="" alt="Preview">
+      <div class="lpa-preview-info">
+        <p class="lpa-preview-name" id="lpa-preview-name"></p>
+        <p class="lpa-preview-size" id="lpa-preview-size"></p>
+      </div>
+      <button class="lpa-preview-remove" id="lpa-remove-btn" title="Quitar foto">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <button class="lpa-btn" id="lpa-analyze-btn" disabled>
+      Analizar mi foto con IA
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div class="lpa-loading" id="lpa-loading">
+    <div class="lpa-spinner"></div>
+    <p class="lpa-loading-text">Analizando tu foto...</p>
+    <p class="lpa-loading-sub">Nuestra IA está evaluando tu imagen profesional</p>
+    <div class="lpa-loading-steps">
+      <div class="lpa-step lpa-active" id="lpa-step-1"><div class="lpa-step-dot"></div>Procesando imagen...</div>
+      <div class="lpa-step" id="lpa-step-2"><div class="lpa-step-dot"></div>Evaluando expresión facial...</div>
+      <div class="lpa-step" id="lpa-step-3"><div class="lpa-step-dot"></div>Analizando imagen profesional...</div>
+      <div class="lpa-step" id="lpa-step-4"><div class="lpa-step-dot"></div>Generando recomendaciones...</div>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div class="lpa-error" id="lpa-error">
+    <div class="lpa-error-icon">😕</div>
+    <p class="lpa-error-text" id="lpa-error-text">Ocurrió un error</p>
+    <button class="lpa-retry-btn" id="lpa-error-retry">Intentar de nuevo</button>
+  </div>
+
+  <!-- Results -->
+  <div class="lpa-results" id="lpa-results">
+    <div class="lpa-score-hero">
+      <p class="lpa-score-label">Tu Puntaje General</p>
+      <div class="lpa-score-ring">
+        <svg viewBox="0 0 140 140">
+          <circle class="lpa-score-ring-bg" cx="70" cy="70" r="65"/>
+          <circle class="lpa-score-ring-fill" id="lpa-ring-fill" cx="70" cy="70" r="65"/>
+        </svg>
+        <div class="lpa-score-number" id="lpa-total-score">0<span>/10</span></div>
+      </div>
+      <p class="lpa-score-verdict" id="lpa-verdict"></p>
+    </div>
+
+    <div class="lpa-metrics">
+      <div class="lpa-metric-card lpa-m-amabilidad">
+        <div class="lpa-metric-header">
+          <div class="lpa-metric-icon">😊</div>
+          <div class="lpa-metric-score" id="lpa-s-amabilidad">0<span>/10</span></div>
+        </div>
+        <p class="lpa-metric-name">Amabilidad</p>
+        <div class="lpa-metric-bar-bg"><div class="lpa-metric-bar-fill" id="lpa-bar-amabilidad"></div></div>
+        <p class="lpa-metric-text" id="lpa-j-amabilidad"></p>
+      </div>
+
+      <div class="lpa-metric-card lpa-m-liderazgo">
+        <div class="lpa-metric-header">
+          <div class="lpa-metric-icon">👔</div>
+          <div class="lpa-metric-score" id="lpa-s-liderazgo">0<span>/10</span></div>
+        </div>
+        <p class="lpa-metric-name">Liderazgo</p>
+        <div class="lpa-metric-bar-bg"><div class="lpa-metric-bar-fill" id="lpa-bar-liderazgo"></div></div>
+        <p class="lpa-metric-text" id="lpa-j-liderazgo"></p>
+      </div>
+
+      <div class="lpa-metric-card lpa-m-competencia">
+        <div class="lpa-metric-header">
+          <div class="lpa-metric-icon">🎯</div>
+          <div class="lpa-metric-score" id="lpa-s-competencia">0<span>/10</span></div>
+        </div>
+        <p class="lpa-metric-name">Competencia</p>
+        <div class="lpa-metric-bar-bg"><div class="lpa-metric-bar-fill" id="lpa-bar-competencia"></div></div>
+        <p class="lpa-metric-text" id="lpa-j-competencia"></p>
+      </div>
+
+      <div class="lpa-metric-card lpa-m-asertividad">
+        <div class="lpa-metric-header">
+          <div class="lpa-metric-icon">📱</div>
+          <div class="lpa-metric-score" id="lpa-s-asertividad">0<span>/10</span></div>
+        </div>
+        <p class="lpa-metric-name">Asertividad Digital</p>
+        <div class="lpa-metric-bar-bg"><div class="lpa-metric-bar-fill" id="lpa-bar-asertividad"></div></div>
+        <p class="lpa-metric-text" id="lpa-j-asertividad"></p>
+      </div>
+    </div>
+
+    <div class="lpa-summary">
+      <p class="lpa-summary-title">💡 Recomendaciones Personalizadas</p>
+      <p class="lpa-summary-text" id="lpa-summary-text"></p>
+    </div>
+
+    <button class="lpa-retry-btn" id="lpa-retry-btn">Analizar otra foto</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ====== CONFIGURACIÓN ======
+  const API_URL = 'https://web-production-5615e.up.railway.app/analyze-linkedin-photo';
+  const API_KEY = 'TU_API_SECRET_KEY_AQUI';  // Reemplaza con tu API_SECRET_KEY de Railway
+  // ===========================
+
+  let selectedFile = null;
+
+  const $ = id => document.getElementById(id);
+
+  const dropzone = $('lpa-dropzone');
+  const fileInput = $('lpa-file-input');
+  const preview = $('lpa-preview');
+  const previewImg = $('lpa-preview-img');
+  const previewName = $('lpa-preview-name');
+  const previewSize = $('lpa-preview-size');
+  const removeBtn = $('lpa-remove-btn');
+  const analyzeBtn = $('lpa-analyze-btn');
+  const uploadSection = $('lpa-upload-section');
+  const loading = $('lpa-loading');
+  const results = $('lpa-results');
+  const errorDiv = $('lpa-error');
+
+  // Drag and drop
+  ['dragenter','dragover'].forEach(e => {
+    dropzone.addEventListener(e, ev => { ev.preventDefault(); dropzone.classList.add('lpa-drag-over'); });
+  });
+  ['dragleave','drop'].forEach(e => {
+    dropzone.addEventListener(e, ev => { ev.preventDefault(); dropzone.classList.remove('lpa-drag-over'); });
+  });
+  dropzone.addEventListener('drop', e => {
+    if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+  });
+
+  fileInput.addEventListener('change', e => {
+    if (e.target.files.length) handleFile(e.target.files[0]);
+  });
+
+  function handleFile(file) {
+    if (!file.type.match(/image\/(jpeg|png|webp)/)) {
+      alert('Por favor sube una imagen JPG, PNG o WEBP');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      alert('La imagen no puede pesar más de 10 MB');
+      return;
+    }
+    selectedFile = file;
+    const reader = new FileReader();
+    reader.onload = e => { previewImg.src = e.target.result; };
+    reader.readAsDataURL(file);
+    previewName.textContent = file.name;
+    previewSize.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+    preview.classList.add('lpa-show');
+    analyzeBtn.disabled = false;
+  }
+
+  removeBtn.addEventListener('click', () => {
+    selectedFile = null;
+    fileInput.value = '';
+    preview.classList.remove('lpa-show');
+    previewImg.src = '';
+    analyzeBtn.disabled = true;
+  });
+
+  // Loading steps animation
+  function animateSteps() {
+    const steps = ['lpa-step-1','lpa-step-2','lpa-step-3','lpa-step-4'];
+    let i = 0;
+    return setInterval(() => {
+      if (i > 0) {
+        $(steps[i-1]).classList.remove('lpa-active');
+        $(steps[i-1]).classList.add('lpa-done');
+      }
+      if (i < steps.length) {
+        $(steps[i]).classList.add('lpa-active');
+        i++;
+      }
+    }, 2500);
+  }
+
+  // Analyze
+  analyzeBtn.addEventListener('click', async () => {
+    if (!selectedFile) return;
+
+    uploadSection.style.display = 'none';
+    results.classList.remove('lpa-show');
+    errorDiv.classList.remove('lpa-show');
+    loading.classList.add('lpa-show');
+
+    // Reset steps
+    ['lpa-step-1','lpa-step-2','lpa-step-3','lpa-step-4'].forEach(id => {
+      $(id).classList.remove('lpa-active','lpa-done');
+    });
+    const stepInterval = animateSteps();
+
+    try {
+      const formData = new FormData();
+      formData.append('image', selectedFile);
+
+      const headers = {};
+      if (API_KEY && API_KEY !== 'TU_API_SECRET_KEY_AQUI') {
+        headers['Authorization'] = 'Bearer ' + API_KEY;
+      }
+
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: headers,
+        body: formData
+      });
+
+      const data = await response.json();
+      clearInterval(stepInterval);
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Error del servidor');
+      }
+
+      loading.classList.remove('lpa-show');
+      showResults(data);
+
+    } catch (err) {
+      clearInterval(stepInterval);
+      loading.classList.remove('lpa-show');
+      $('lpa-error-text').textContent = err.message || 'Ocurrió un error al analizar la foto';
+      errorDiv.classList.add('lpa-show');
+    }
+  });
+
+  function showResults(data) {
+    const total = data.calificacion_total;
+    const d = data.desglose;
+
+    // Ring animation
+    const circumference = 2 * Math.PI * 65; // ~408
+    const offset = circumference - (total / 10) * circumference;
+    const ring = $('lpa-ring-fill');
+    ring.style.strokeDasharray = circumference;
+    ring.style.strokeDashoffset = circumference;
+    setTimeout(() => { ring.style.strokeDashoffset = offset; }, 100);
+
+    // Animated counter
+    animateCounter('lpa-total-score', total, '/10');
+
+    // Verdict
+    let verdict = '';
+    if (total >= 9) verdict = '¡Excelente! Tu foto es de nivel premium';
+    else if (total >= 7.5) verdict = '¡Muy bien! Tu foto transmite profesionalismo';
+    else if (total >= 6) verdict = 'Buena base, pero hay espacio para mejorar';
+    else verdict = 'Tu foto necesita mejoras importantes';
+    $('lpa-verdict').textContent = verdict;
+
+    // Metrics
+    const metrics = [
+      { key: 'amabilidad', id: 'amabilidad' },
+      { key: 'liderazgo', id: 'liderazgo' },
+      { key: 'competencia', id: 'competencia' },
+      { key: 'asertividad_digital', id: 'asertividad' }
+    ];
+
+    metrics.forEach(m => {
+      const score = d[m.key].puntaje;
+      animateCounter('lpa-s-' + m.id, score, '/10');
+      setTimeout(() => {
+        $('lpa-bar-' + m.id).style.width = (score * 10) + '%';
+      }, 200);
+      $('lpa-j-' + m.id).textContent = d[m.key].justificacion;
+    });
+
+    $('lpa-summary-text').textContent = data.resumen;
+    results.classList.add('lpa-show');
+  }
+
+  function animateCounter(elId, target, suffix) {
+    const el = $(elId);
+    let current = 0;
+    const step = target / 30;
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        current = target;
+        clearInterval(interval);
+      }
+      el.innerHTML = (Math.round(current * 10) / 10) + '<span>' + suffix + '</span>';
+    }, 40);
+  }
+
+  // Retry buttons
+  $('lpa-retry-btn').addEventListener('click', resetAll);
+  $('lpa-error-retry').addEventListener('click', resetAll);
+
+  function resetAll() {
+    selectedFile = null;
+    fileInput.value = '';
+    preview.classList.remove('lpa-show');
+    previewImg.src = '';
+    analyzeBtn.disabled = true;
+    results.classList.remove('lpa-show');
+    errorDiv.classList.remove('lpa-show');
+    loading.classList.remove('lpa-show');
+    uploadSection.style.display = 'block';
+  }
+})();
+</script>
