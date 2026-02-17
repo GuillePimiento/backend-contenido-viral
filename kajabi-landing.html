@@ -1,320 +1,557 @@
 <div id="linkedin-analyzer">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
     #linkedin-analyzer {
-      max-width: 600px;
+      max-width: 640px;
       margin: 40px auto;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      color: #1a1a1a;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #1e293b;
+      -webkit-font-smoothing: antialiased;
     }
-    #linkedin-analyzer * { box-sizing: border-box; }
+    #linkedin-analyzer * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Header */
+    .la-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .la-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .la-badge svg { flex-shrink: 0; }
     .la-title {
-      text-align: center;
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: #0a66c2;
+      font-size: 32px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 10px;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
     }
+    .la-title span { color: #2563eb; }
     .la-subtitle {
-      text-align: center;
       font-size: 16px;
-      color: #555;
-      margin-bottom: 30px;
+      color: #64748b;
+      line-height: 1.5;
+      max-width: 440px;
+      margin: 0 auto;
     }
+
+    /* Card */
     .la-card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-      padding: 32px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.08);
+      padding: 36px;
+      border: 1px solid #e2e8f0;
     }
+
+    /* Tabs */
     .la-tabs {
       display: flex;
-      gap: 0;
-      margin-bottom: 24px;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 2px solid #0a66c2;
+      background: #f1f5f9;
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 28px;
     }
     .la-tab {
       flex: 1;
-      padding: 12px;
+      padding: 11px 16px;
       text-align: center;
       cursor: pointer;
       font-weight: 600;
       font-size: 14px;
-      background: #fff;
-      color: #0a66c2;
+      background: transparent;
+      color: #64748b;
       border: none;
-      transition: all 0.2s;
+      border-radius: 8px;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
+    .la-tab svg { flex-shrink: 0; }
     .la-tab.active {
-      background: #0a66c2;
-      color: #fff;
+      background: #ffffff;
+      color: #1e293b;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
-    .la-upload-area {
-      border: 2px dashed #ccc;
-      border-radius: 12px;
-      padding: 40px 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.3s, background 0.3s;
-      margin-bottom: 20px;
-      position: relative;
-    }
-    .la-upload-area:hover { border-color: #0a66c2; background: #f0f7ff; }
-    .la-upload-area.has-file { border-color: #0a66c2; background: #f0f7ff; }
-    .la-upload-icon { font-size: 48px; margin-bottom: 8px; }
-    .la-upload-text { font-size: 15px; color: #666; }
-    .la-upload-text strong { color: #0a66c2; }
-    .la-file-input { display: none; }
-    .la-preview-img {
-      max-width: 150px;
-      max-height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #0a66c2;
-    }
-    .la-url-input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid #ddd;
-      border-radius: 10px;
-      font-size: 15px;
-      margin-bottom: 20px;
-      transition: border-color 0.3s;
-      outline: none;
-    }
-    .la-url-input:focus { border-color: #0a66c2; }
-    .la-btn {
-      width: 100%;
-      padding: 16px;
-      background: #0a66c2;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 17px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.1s;
-    }
-    .la-btn:hover { background: #004182; }
-    .la-btn:active { transform: scale(0.98); }
-    .la-btn:disabled { background: #a0c4e8; cursor: not-allowed; }
-    .la-spinner {
-      display: inline-block;
-      width: 20px; height: 20px;
-      border: 3px solid #fff;
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: la-spin 0.8s linear infinite;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
-    @keyframes la-spin { to { transform: rotate(360deg); } }
 
-    /* Resultados */
-    .la-results { display: none; margin-top: 30px; }
-    .la-results.visible { display: block; }
-    .la-score-total {
+    /* Upload */
+    .la-upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 44px 24px;
       text-align: center;
-      margin-bottom: 28px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 24px;
+      background: #fafbfc;
     }
-    .la-score-circle {
-      width: 120px; height: 120px;
-      border-radius: 50%;
+    .la-upload-area:hover { border-color: #2563eb; background: #f0f5ff; }
+    .la-upload-area.has-file { border-color: #2563eb; background: #f0f5ff; border-style: solid; }
+    .la-upload-icon-wrap {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      border-radius: 16px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 42px;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 8px;
-      position: relative;
+      margin-bottom: 16px;
     }
-    .la-score-circle span { position: relative; z-index: 1; }
-    .la-score-label {
-      font-size: 14px;
-      color: #666;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .la-upload-text { font-size: 15px; color: #64748b; line-height: 1.6; }
+    .la-upload-text strong { color: #2563eb; font-weight: 600; }
+    .la-upload-hint { font-size: 13px; color: #94a3b8; margin-top: 6px; }
+    .la-file-input { display: none; }
+    .la-preview-img {
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #2563eb;
+      box-shadow: 0 4px 16px rgba(37,99,235,0.2);
     }
-    .la-metric {
-      background: #f8f9fa;
+    .la-preview-text { font-size: 14px; color: #2563eb; font-weight: 600; margin-top: 12px; }
+
+    /* URL input */
+    .la-url-input {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #e2e8f0;
       border-radius: 12px;
-      padding: 18px 20px;
-      margin-bottom: 12px;
+      font-size: 15px;
+      font-family: inherit;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+      outline: none;
+      background: #fafbfc;
+      color: #1e293b;
+    }
+    .la-url-input:focus { border-color: #2563eb; background: #fff; box-shadow: 0 0 0 4px rgba(37,99,235,0.1); }
+    .la-url-input::placeholder { color: #94a3b8; }
+
+    /* Button */
+    .la-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    }
+    .la-btn:hover { background: linear-gradient(135deg, #1d4ed8, #1e40af); box-shadow: 0 6px 20px rgba(37,99,235,0.4); transform: translateY(-1px); }
+    .la-btn:active { transform: translateY(0); }
+    .la-btn:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; transform: none; }
+    .la-btn svg { flex-shrink: 0; }
+    .la-spinner {
+      display: inline-block;
+      width: 20px; height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: la-spin 0.7s linear infinite;
+    }
+    @keyframes la-spin { to { transform: rotate(360deg); } }
+
+    /* Results */
+    .la-results { display: none; margin-top: 28px; }
+    .la-results.visible { display: block; animation: la-fadeUp 0.5s ease; }
+    @keyframes la-fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Gauge */
+    .la-gauge-section {
+      text-align: center;
+      padding: 28px 0 32px;
+      border-bottom: 1px solid #f1f5f9;
+      margin-bottom: 28px;
+    }
+    .la-gauge-wrap {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 16px;
+    }
+    .la-gauge-svg { width: 180px; height: 180px; transform: rotate(-90deg); }
+    .la-gauge-bg {
+      fill: none;
+      stroke: #f1f5f9;
+      stroke-width: 12;
+    }
+    .la-gauge-fill {
+      fill: none;
+      stroke-width: 12;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1.5s ease, stroke 0.5s ease;
+    }
+    .la-gauge-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .la-gauge-number {
+      font-size: 48px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+    .la-gauge-max {
+      font-size: 14px;
+      color: #94a3b8;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+    .la-gauge-label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #64748b;
+    }
+
+    /* Metric cards */
+    .la-metrics-grid {
+      display: flex;
+      flex-direction: column;
       gap: 16px;
     }
-    .la-metric-icon { font-size: 28px; flex-shrink: 0; }
-    .la-metric-info { flex: 1; }
-    .la-metric-header {
+    .la-metric {
+      background: #f8fafc;
+      border-radius: 14px;
+      padding: 22px 24px;
+      border: 1px solid #f1f5f9;
+      transition: all 0.3s ease;
+    }
+    .la-metric:hover { border-color: #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .la-metric-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .la-metric-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .la-metric-icon svg { width: 22px; height: 22px; }
+    .la-icon-amabilidad { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+    .la-icon-amabilidad svg { color: #16a34a; }
+    .la-icon-liderazgo { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .la-icon-liderazgo svg { color: #2563eb; }
+    .la-icon-competencia { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    .la-icon-competencia svg { color: #d97706; }
+    .la-icon-asertividad { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); }
+    .la-icon-asertividad svg { color: #9333ea; }
+    .la-metric-title-row {
+      flex: 1;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
     }
-    .la-metric-name { font-weight: 700; font-size: 15px; }
+    .la-metric-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: #1e293b;
+    }
     .la-metric-score {
       font-weight: 800;
-      font-size: 18px;
-      color: #0a66c2;
+      font-size: 20px;
+      letter-spacing: -0.5px;
     }
-    .la-metric-bar {
-      height: 8px;
-      background: #e0e0e0;
-      border-radius: 4px;
+    .la-score-green { color: #16a34a; }
+    .la-score-blue { color: #2563eb; }
+    .la-score-amber { color: #d97706; }
+    .la-score-purple { color: #9333ea; }
+    .la-metric-bar-track {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
       overflow: hidden;
-      margin-bottom: 6px;
+      margin-bottom: 12px;
     }
-    .la-metric-fill {
+    .la-metric-bar-fill {
       height: 100%;
-      border-radius: 4px;
-      transition: width 1s ease;
+      border-radius: 3px;
+      transition: width 1.2s ease;
       width: 0%;
     }
-    .la-metric-text { font-size: 13px; color: #555; line-height: 1.4; }
-    .la-summary {
-      background: linear-gradient(135deg, #f0f7ff, #e8f0fe);
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
-      border-left: 4px solid #0a66c2;
+    .la-fill-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+    .la-fill-blue { background: linear-gradient(90deg, #60a5fa, #2563eb); }
+    .la-fill-amber { background: linear-gradient(90deg, #fbbf24, #d97706); }
+    .la-fill-purple { background: linear-gradient(90deg, #c084fc, #9333ea); }
+    .la-metric-text {
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.55;
     }
-    .la-summary-title { font-weight: 700; margin-bottom: 8px; color: #0a66c2; }
-    .la-summary-text { font-size: 14px; line-height: 1.6; color: #333; }
+
+    /* Summary */
+    .la-summary {
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      border-radius: 14px;
+      padding: 24px;
+      margin-top: 24px;
+      border: 1px solid #e2e8f0;
+      position: relative;
+      overflow: hidden;
+    }
+    .la-summary::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, #2563eb, #7c3aed);
+      border-radius: 4px 0 0 4px;
+    }
+    .la-summary-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .la-summary-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, #dbeafe, #ede9fe);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .la-summary-icon svg { width: 16px; height: 16px; color: #2563eb; }
+    .la-summary-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: #1e293b;
+    }
+    .la-summary-text { font-size: 14px; line-height: 1.7; color: #475569; padding-left: 42px; }
+
+    /* Error */
     .la-error {
-      background: #fff0f0;
-      color: #c00;
-      padding: 14px;
-      border-radius: 10px;
+      background: #fef2f2;
+      color: #dc2626;
+      padding: 14px 18px;
+      border-radius: 12px;
       text-align: center;
       margin-top: 16px;
       font-size: 14px;
+      font-weight: 500;
       display: none;
+      border: 1px solid #fecaca;
     }
-    .la-error.visible { display: block; }
+    .la-error.visible { display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+    /* Retry */
     .la-retry {
-      display: block;
-      margin: 20px auto 0;
-      padding: 12px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 28px auto 0;
+      padding: 12px 28px;
       background: transparent;
-      color: #0a66c2;
-      border: 2px solid #0a66c2;
-      border-radius: 10px;
+      color: #2563eb;
+      border: 2px solid #2563eb;
+      border-radius: 12px;
       font-size: 15px;
       font-weight: 600;
+      font-family: inherit;
       cursor: pointer;
+      transition: all 0.2s ease;
     }
-    .la-retry:hover { background: #f0f7ff; }
+    .la-retry:hover { background: #eff6ff; }
+
     .la-hidden { display: none; }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      .la-card { padding: 24px 20px; }
+      .la-title { font-size: 26px; }
+      .la-gauge-wrap { width: 150px; height: 150px; }
+      .la-gauge-svg { width: 150px; height: 150px; }
+      .la-gauge-number { font-size: 40px; }
+      .la-metric { padding: 18px; }
+    }
   </style>
 
-  <div class="la-title">Analiza tu Foto de LinkedIn</div>
-  <div class="la-subtitle">Descubre si tu foto transmite la imagen profesional que necesitas</div>
+  <!-- Header -->
+  <div class="la-header">
+    <div class="la-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+      Analisis con IA
+    </div>
+    <div class="la-title">Analiza tu Foto de <span>LinkedIn</span></div>
+    <div class="la-subtitle">Descubre como tu foto impacta la percepcion profesional que proyectas</div>
+  </div>
 
+  <!-- Form Card -->
   <div class="la-card">
-    <!-- Tabs -->
     <div class="la-tabs">
-      <button class="la-tab active" onclick="laShowTab('upload')">Subir Foto</button>
-      <button class="la-tab" onclick="laShowTab('url')">Pegar URL</button>
+      <button class="la-tab active" onclick="laShowTab('upload')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Subir Foto
+      </button>
+      <button class="la-tab" onclick="laShowTab('url')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        Pegar URL
+      </button>
     </div>
 
-    <!-- Upload tab -->
     <div id="la-tab-upload">
       <div class="la-upload-area" id="la-drop-zone" onclick="document.getElementById('la-file-input').click()">
         <div id="la-upload-placeholder">
-          <div class="la-upload-icon">📸</div>
-          <div class="la-upload-text">
-            <strong>Haz clic aqui</strong> o arrastra tu foto<br>
-            <small>JPG, PNG - Max 10MB</small>
+          <div class="la-upload-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           </div>
+          <div class="la-upload-text">
+            <strong>Haz clic para seleccionar</strong> o arrastra tu foto aqui
+          </div>
+          <div class="la-upload-hint">Formatos: JPG, PNG &mdash; Max 10 MB</div>
         </div>
         <div id="la-upload-preview" class="la-hidden">
           <img id="la-preview-image" class="la-preview-img" alt="Preview">
-          <div class="la-upload-text" style="margin-top:10px"><strong>Foto cargada</strong> - Clic para cambiar</div>
+          <div class="la-preview-text">Foto cargada &mdash; Clic para cambiar</div>
         </div>
         <input type="file" id="la-file-input" class="la-file-input" accept="image/*">
       </div>
     </div>
 
-    <!-- URL tab -->
     <div id="la-tab-url" class="la-hidden">
       <input type="text" id="la-url-input" class="la-url-input" placeholder="https://ejemplo.com/mi-foto-linkedin.jpg">
     </div>
 
     <button class="la-btn" id="la-analyze-btn" onclick="laAnalyze()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       Analizar Mi Foto
     </button>
 
-    <div class="la-error" id="la-error"></div>
+    <div class="la-error" id="la-error">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+      <span id="la-error-text"></span>
+    </div>
   </div>
 
-  <!-- Resultados -->
+  <!-- Results -->
   <div class="la-results" id="la-results">
     <div class="la-card">
-      <div class="la-score-total">
-        <div class="la-score-circle" id="la-total-circle">
-          <span id="la-total-score">0</span>
+
+      <!-- Gauge -->
+      <div class="la-gauge-section">
+        <div class="la-gauge-wrap">
+          <svg class="la-gauge-svg" viewBox="0 0 180 180">
+            <circle class="la-gauge-bg" cx="90" cy="90" r="78"/>
+            <circle class="la-gauge-fill" id="la-gauge-circle" cx="90" cy="90" r="78"
+              stroke-dasharray="490" stroke-dashoffset="490" stroke="#2563eb"/>
+          </svg>
+          <div class="la-gauge-center">
+            <div class="la-gauge-number" id="la-total-score">0</div>
+            <div class="la-gauge-max">de 10</div>
+          </div>
         </div>
-        <div class="la-score-label">Puntaje Total / 10</div>
+        <div class="la-gauge-label">Puntaje General</div>
       </div>
 
-      <div id="la-metric-amabilidad" class="la-metric">
-        <div class="la-metric-icon">😊</div>
-        <div class="la-metric-info">
-          <div class="la-metric-header">
-            <span class="la-metric-name">Amabilidad</span>
-            <span class="la-metric-score" id="la-score-amabilidad">0/10</span>
+      <!-- Metrics -->
+      <div class="la-metrics-grid">
+
+        <div class="la-metric">
+          <div class="la-metric-top">
+            <div class="la-metric-icon la-icon-amabilidad">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </div>
+            <div class="la-metric-title-row">
+              <span class="la-metric-name">Amabilidad</span>
+              <span class="la-metric-score la-score-green" id="la-score-amabilidad">0/10</span>
+            </div>
           </div>
-          <div class="la-metric-bar"><div class="la-metric-fill" id="la-bar-amabilidad" style="background:#4CAF50"></div></div>
+          <div class="la-metric-bar-track"><div class="la-metric-bar-fill la-fill-green" id="la-bar-amabilidad"></div></div>
           <div class="la-metric-text" id="la-text-amabilidad"></div>
         </div>
-      </div>
 
-      <div id="la-metric-liderazgo" class="la-metric">
-        <div class="la-metric-icon">👔</div>
-        <div class="la-metric-info">
-          <div class="la-metric-header">
-            <span class="la-metric-name">Liderazgo</span>
-            <span class="la-metric-score" id="la-score-liderazgo">0/10</span>
+        <div class="la-metric">
+          <div class="la-metric-top">
+            <div class="la-metric-icon la-icon-liderazgo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="la-metric-title-row">
+              <span class="la-metric-name">Liderazgo</span>
+              <span class="la-metric-score la-score-blue" id="la-score-liderazgo">0/10</span>
+            </div>
           </div>
-          <div class="la-metric-bar"><div class="la-metric-fill" id="la-bar-liderazgo" style="background:#2196F3"></div></div>
+          <div class="la-metric-bar-track"><div class="la-metric-bar-fill la-fill-blue" id="la-bar-liderazgo"></div></div>
           <div class="la-metric-text" id="la-text-liderazgo"></div>
         </div>
-      </div>
 
-      <div id="la-metric-competencia" class="la-metric">
-        <div class="la-metric-icon">🏆</div>
-        <div class="la-metric-info">
-          <div class="la-metric-header">
-            <span class="la-metric-name">Competencia</span>
-            <span class="la-metric-score" id="la-score-competencia">0/10</span>
+        <div class="la-metric">
+          <div class="la-metric-top">
+            <div class="la-metric-icon la-icon-competencia">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="la-metric-title-row">
+              <span class="la-metric-name">Competencia</span>
+              <span class="la-metric-score la-score-amber" id="la-score-competencia">0/10</span>
+            </div>
           </div>
-          <div class="la-metric-bar"><div class="la-metric-fill" id="la-bar-competencia" style="background:#FF9800"></div></div>
+          <div class="la-metric-bar-track"><div class="la-metric-bar-fill la-fill-amber" id="la-bar-competencia"></div></div>
           <div class="la-metric-text" id="la-text-competencia"></div>
         </div>
-      </div>
 
-      <div id="la-metric-asertividad" class="la-metric">
-        <div class="la-metric-icon">📱</div>
-        <div class="la-metric-info">
-          <div class="la-metric-header">
-            <span class="la-metric-name">Asertividad Digital</span>
-            <span class="la-metric-score" id="la-score-asertividad">0/10</span>
+        <div class="la-metric">
+          <div class="la-metric-top">
+            <div class="la-metric-icon la-icon-asertividad">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <div class="la-metric-title-row">
+              <span class="la-metric-name">Asertividad Digital</span>
+              <span class="la-metric-score la-score-purple" id="la-score-asertividad">0/10</span>
+            </div>
           </div>
-          <div class="la-metric-bar"><div class="la-metric-fill" id="la-bar-asertividad" style="background:#9C27B0"></div></div>
+          <div class="la-metric-bar-track"><div class="la-metric-bar-fill la-fill-purple" id="la-bar-asertividad"></div></div>
           <div class="la-metric-text" id="la-text-asertividad"></div>
         </div>
+
       </div>
 
-      <div class="la-summary" id="la-summary">
-        <div class="la-summary-title">Recomendaciones</div>
+      <!-- Summary -->
+      <div class="la-summary">
+        <div class="la-summary-header">
+          <div class="la-summary-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div class="la-summary-title">Recomendaciones</div>
+        </div>
         <div class="la-summary-text" id="la-summary-text"></div>
       </div>
 
-      <button class="la-retry" onclick="laReset()">Analizar otra foto</button>
+      <button class="la-retry" onclick="laReset()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+        Analizar otra foto
+      </button>
     </div>
   </div>
 </div>
@@ -322,7 +559,7 @@
 <script>
 (function() {
   // ============================================
-  // CONFIGURACION - NO CAMBIAR LA URL
+  // CONFIGURACION - NO CAMBIAR
   // ============================================
   var API_URL = "https://web-production-5615e.up.railway.app/analyze-linkedin-photo";
   var API_KEY = "cv-2026-GuiLLe-SecretKey-X7k9m";
@@ -330,6 +567,7 @@
 
   var currentTab = "upload";
   var selectedFile = null;
+  var GAUGE_CIRCUMFERENCE = 490;
 
   window.laShowTab = function(tab) {
     currentTab = tab;
@@ -340,7 +578,6 @@
     document.getElementById("la-tab-url").classList.toggle("la-hidden", tab !== "url");
   };
 
-  // File input
   document.getElementById("la-file-input").addEventListener("change", function(e) {
     var file = e.target.files[0];
     if (!file) return;
@@ -355,7 +592,6 @@
     reader.readAsDataURL(file);
   });
 
-  // Drag & drop
   var dropZone = document.getElementById("la-drop-zone");
   dropZone.addEventListener("dragover", function(e) { e.preventDefault(); dropZone.classList.add("has-file"); });
   dropZone.addEventListener("dragleave", function() { if (!selectedFile) dropZone.classList.remove("has-file"); });
@@ -373,9 +609,8 @@
   });
 
   function showError(msg) {
-    var el = document.getElementById("la-error");
-    el.textContent = msg;
-    el.classList.add("visible");
+    document.getElementById("la-error-text").textContent = msg;
+    document.getElementById("la-error").classList.add("visible");
   }
 
   function hideError() {
@@ -383,32 +618,36 @@
   }
 
   function getScoreColor(score) {
-    if (score >= 8) return "#4CAF50";
-    if (score >= 6) return "#FF9800";
-    if (score >= 4) return "#FF5722";
-    return "#F44336";
+    if (score >= 8) return "#16a34a";
+    if (score >= 6) return "#2563eb";
+    if (score >= 4) return "#d97706";
+    return "#dc2626";
   }
 
   function animateScore(el, target) {
     var current = 0;
-    var step = target / 30;
+    var step = target / 40;
     var interval = setInterval(function() {
       current += step;
       if (current >= target) { current = target; clearInterval(interval); }
       el.textContent = current.toFixed(1);
-    }, 30);
+    }, 25);
+  }
+
+  function animateGauge(score) {
+    var circle = document.getElementById("la-gauge-circle");
+    var offset = GAUGE_CIRCUMFERENCE - (GAUGE_CIRCUMFERENCE * score / 10);
+    circle.style.stroke = getScoreColor(score);
+    circle.style.strokeDashoffset = offset;
   }
 
   function renderResults(data) {
     var results = document.getElementById("la-results");
     var total = data.calificacion_total;
 
-    // Total score
-    var circle = document.getElementById("la-total-circle");
-    circle.style.background = getScoreColor(total);
     animateScore(document.getElementById("la-total-score"), total);
+    setTimeout(function() { animateGauge(total); }, 100);
 
-    // Metrics
     var metrics = [
       { key: "amabilidad", id: "amabilidad" },
       { key: "liderazgo", id: "liderazgo" },
@@ -422,14 +661,19 @@
       document.getElementById("la-text-" + m.id).textContent = d.justificacion;
       setTimeout(function() {
         document.getElementById("la-bar-" + m.id).style.width = (d.puntaje * 10) + "%";
-      }, 200);
+      }, 300);
     });
 
-    // Summary
     document.getElementById("la-summary-text").textContent = data.resumen;
 
     results.classList.add("visible");
     results.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function resetBtn() {
+    var btn = document.getElementById("la-analyze-btn");
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Analizar Mi Foto';
   }
 
   window.laAnalyze = function() {
@@ -445,14 +689,12 @@
       fetch(API_URL, { method: "POST", headers: { "Authorization": "Bearer " + API_KEY }, body: formData })
         .then(function(r) { return r.json(); })
         .then(function(data) {
-          btn.disabled = false;
-          btn.textContent = "Analizar Mi Foto";
+          resetBtn();
           if (data.error) { showError(data.error); return; }
           renderResults(data);
         })
         .catch(function() {
-          btn.disabled = false;
-          btn.textContent = "Analizar Mi Foto";
+          resetBtn();
           showError("Error de conexion. Intenta de nuevo.");
         });
 
@@ -468,14 +710,12 @@
       })
         .then(function(r) { return r.json(); })
         .then(function(data) {
-          btn.disabled = false;
-          btn.textContent = "Analizar Mi Foto";
+          resetBtn();
           if (data.error) { showError(data.error); return; }
           renderResults(data);
         })
         .catch(function() {
-          btn.disabled = false;
-          btn.textContent = "Analizar Mi Foto";
+          resetBtn();
           showError("Error de conexion. Intenta de nuevo.");
         });
     }
@@ -490,9 +730,16 @@
     document.getElementById("la-file-input").value = "";
     selectedFile = null;
     hideError();
+
+    // Reset gauge
+    document.getElementById("la-gauge-circle").style.strokeDashoffset = GAUGE_CIRCUMFERENCE;
+    document.getElementById("la-total-score").textContent = "0";
+
+    // Reset bars
     ["amabilidad","liderazgo","competencia","asertividad"].forEach(function(id) {
       document.getElementById("la-bar-" + id).style.width = "0%";
     });
+
     document.querySelector("#linkedin-analyzer .la-card").scrollIntoView({ behavior: "smooth" });
   };
 })();
